@@ -1,0 +1,71 @@
+name: Bug report
+description: Report a reproducible problem using synthetic, non-sensitive data.
+title: "[Bug]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve Notice. Search existing issues first.
+
+        Do not include real agreements, credentials, personal information, private portal links, customer identifiers, or security vulnerabilities. Report suspected vulnerabilities through the private path in `SECURITY.md`.
+  - type: checkboxes
+    id: safety
+    attributes:
+      label: Safety checks
+      options:
+        - label: I searched existing issues and pull requests for this problem.
+          required: true
+        - label: This report uses only synthetic, non-sensitive data.
+          required: true
+        - label: This is not a vulnerability report or a request for production incident support.
+          required: true
+  - type: input
+    id: revision
+    attributes:
+      label: Notice version or revision
+      description: Provide the release tag or full Git commit SHA.
+      placeholder: v0.1.0 or 0123456789abcdef...
+    validations:
+      required: true
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - Local evaluation
+        - Staging deployment
+        - Production deployment
+        - Documentation only
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+      description: State the expected behavior and the actual behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: List the smallest repeatable steps and any synthetic fixture needed.
+      placeholder: |
+        1. Start evaluation mode...
+        2. Open...
+        3. Select...
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Redacted evidence
+      description: Include request IDs, safe logs, screenshots, or failing test output only after removing secrets and identifying data.
+      render: shell
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include OS, Node/npm versions, browser, and relevant deployment shape. Never paste environment-variable values.
+      placeholder: macOS; Node 22.23.2; npm 11.3.0; Chromium...

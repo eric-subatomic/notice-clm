@@ -1,0 +1,75 @@
+{
+  "schemaVersion": "1.0",
+  "accountId": "replace-with-32-character-cloudflare-account-id",
+  "sourceRevision": "replace-with-exact-git-commit-revision",
+  "environment": "staging",
+  "deploymentModel": "hosted",
+  "workerName": "replace-with-notice-staging-worker",
+  "customDomain": "notice-staging.customer.invalid",
+  "workspace": {
+    "id": "replace-with-permanent-workspace-id",
+    "name": "Replace with customer-approved workspace name",
+    "bootstrap": {
+      "enabled": true,
+      "adminEmails": [
+        "first-admin@customer.invalid",
+        "second-admin@customer.invalid"
+      ]
+    }
+  },
+  "identity": {
+    "mode": "cloudflare-access",
+    "teamDomain": "https://replace-with-team.cloudflareaccess.invalid",
+    "audience": "replace-with-access-application-audience"
+  },
+  "docuseal": {
+    "enabled": true,
+    "configured": false,
+    "deployment": "cloud-global",
+    "apiBaseUrl": "https://api.docuseal.com",
+    "templateId": 0,
+    "validatedRelease": "3.2.1",
+    "apiClientContract": "1.0.24",
+    "htmlSubmissionsEntitled": false,
+    "expirationHours": 168,
+    "email2faRequired": true,
+    "mcp": {
+      "enabled": false
+    }
+  },
+  "scanner": {
+    "enabled": true,
+    "configured": false,
+    "gatewayUrl": "https://scanner.customer.invalid/v1/scan",
+    "ocr": {
+      "enabled": false
+    }
+  },
+  "mail": {
+    "enabled": true,
+    "configured": false,
+    "gatewayUrl": "https://delivery.customer.invalid/v1/events"
+  },
+  "counterpartyExchange": {
+    "automatedDeliveryAccepted": false,
+    "portal": {
+      "enabled": true,
+      "ttlHours": 72
+    },
+    "emailCapture": {
+      "enabled": false,
+      "configured": false,
+      "provider": "none"
+    }
+  },
+  "crm": {
+    "provider": "none"
+  },
+  "retention": {
+    "purgeGraceDays": 30
+  },
+  "schedules": {
+    "outbox": "*/5 * * * *",
+    "retention": "15 2 * * *"
+  }
+}

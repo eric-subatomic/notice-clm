@@ -1,0 +1,1205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A practical, first-time-user guide to Notice CLM: intake, Word redlines, approvals, signature, obligations, and production handoff.">
+  <meta name="theme-color" content="#0d2017">
+  <title>Notice CLM — practical how-to guide</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --green-950: #0d2017;
+      --green-900: #142c20;
+      --green-800: #1d3c2b;
+      --green-700: #2d563e;
+      --green-100: #e5eee8;
+      --green-50: #f2f7f3;
+      --lime: #c8ee5d;
+      --lime-soft: #eff8cf;
+      --coral: #b84d37;
+      --coral-soft: #fff0eb;
+      --amber: #8b5b0e;
+      --amber-soft: #fff7e6;
+      --blue: #225da6;
+      --blue-soft: #eaf3ff;
+      --ink: #17231d;
+      --ink-2: #34423b;
+      --muted: #5f6b64;
+      --line: #dfe4df;
+      --line-strong: #c9d1ca;
+      --surface: #fff;
+      --canvas: #f4f5f1;
+      --paper: #fffef9;
+      --focus: #6f9229;
+      --shadow: 0 16px 48px rgba(13, 32, 23, .08);
+      --radius: 16px;
+      --font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --mono: ui-monospace, "SFMono-Regular", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-width: 320px; scroll-behavior: smooth; scroll-padding-top: 84px; background: var(--canvas); }
+    body { margin: 0; color: var(--ink); background: var(--canvas); font: 16px/1.65 var(--font); -webkit-font-smoothing: antialiased; }
+    a { color: #24593c; text-decoration-thickness: .08em; text-underline-offset: .18em; }
+    a:hover { color: var(--green-950); }
+    button, input { color: inherit; font: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; box-shadow: 0 0 0 3px #fff; }
+    ::selection { color: var(--green-950); background: var(--lime); }
+
+    .skip-link {
+      position: fixed;
+      top: 8px;
+      left: 12px;
+      z-index: 100;
+      padding: 10px 14px;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--green-950);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      border-bottom: 1px solid #294438;
+      color: #fff;
+      background: rgba(13, 32, 23, .97);
+      backdrop-filter: blur(14px);
+    }
+    .header-inner {
+      width: min(1480px, calc(100% - 32px));
+      min-height: 66px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      margin: 0 auto;
+    }
+    .brand { display: inline-flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; }
+    .brand-mark { width: 27px; height: 27px; display: grid; place-items: end center; gap: 2px; grid-auto-flow: column; padding: 6px; border-radius: 7px; background: var(--lime); }
+    .brand-mark i { width: 3px; border-radius: 3px; background: var(--green-950); }
+    .brand-mark i:nth-child(1) { height: 7px; }
+    .brand-mark i:nth-child(2) { height: 12px; }
+    .brand-mark i:nth-child(3) { height: 16px; }
+    .brand b { font-size: 14px; letter-spacing: .15em; }
+    .brand span:last-child { padding-left: 10px; border-left: 1px solid #426052; color: #aebdb4; font-size: 13px; }
+    .header-meta { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+    .header-meta span { color: #bdcbc2; font: 11px var(--mono); letter-spacing: .05em; }
+    .header-meta a,
+    .print-button { min-height: 38px; display: inline-flex; align-items: center; padding: 0 12px; border: 1px solid #426052; border-radius: 8px; color: #f0f4f1; background: #183025; font-size: 12px; font-weight: 700; text-decoration: none; }
+    .header-meta a:hover,
+    .print-button:hover { border-color: #77927f; background: #203c2e; }
+
+    .hero {
+      color: #fff;
+      background:
+        radial-gradient(circle at 82% 14%, rgba(200, 238, 93, .16), transparent 28%),
+        linear-gradient(145deg, var(--green-950), #173c28 72%, #244b35);
+    }
+    .hero-inner { width: min(1220px, calc(100% - 40px)); display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(300px, .65fr); gap: 54px; align-items: end; margin: 0 auto; padding: 76px 0 68px; }
+    .eyebrow { display: flex; align-items: center; gap: 9px; margin: 0 0 15px; color: #cfdbd3; font: 800 11px var(--mono); letter-spacing: .15em; text-transform: uppercase; }
+    .eyebrow::before { width: 8px; height: 8px; content: ""; border-radius: 2px; background: var(--lime); box-shadow: 0 0 0 4px rgba(200, 238, 93, .16); }
+    .hero h1 { max-width: 850px; margin: 0; font-size: clamp(42px, 6.5vw, 80px); font-weight: 520; letter-spacing: -.065em; line-height: .99; }
+    .hero h1 em { color: var(--lime); font-style: normal; }
+    .hero-copy { max-width: 760px; margin: 24px 0 0; color: #d4dfd8; font-size: clamp(17px, 2vw, 21px); line-height: 1.55; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+    .hero-actions a { min-height: 46px; display: inline-flex; align-items: center; justify-content: center; padding: 0 17px; border: 1px solid #769269; border-radius: 9px; color: #fff; background: #244b35; font-size: 13px; font-weight: 750; text-decoration: none; }
+    .hero-actions a:first-child { border-color: var(--lime); color: var(--green-950); background: var(--lime); }
+    .hero-actions a:hover { transform: translateY(-1px); }
+    .hero-route { padding: 24px; border: 1px solid rgba(208, 224, 214, .23); border-radius: 18px; background: rgba(7, 27, 16, .36); box-shadow: 0 22px 60px rgba(0, 0, 0, .14); }
+    .hero-route h2 { margin: 0 0 12px; font-size: 16px; }
+    .hero-route ol { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; counter-reset: route; }
+    .hero-route li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: start; color: #d6e0d9; font-size: 13px; counter-increment: route; }
+    .hero-route li::before { width: 28px; height: 28px; display: grid; place-items: center; content: counter(route); border: 1px solid #526f5e; border-radius: 8px; color: var(--lime); background: #173526; font: 800 11px var(--mono); }
+    .hero-route strong { display: block; color: #fff; }
+
+    .truth-band { border-bottom: 1px solid var(--line); background: #fff; }
+    .truth-grid { width: min(1220px, calc(100% - 40px)); display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 0 auto; }
+    .truth-grid article { padding: 27px 30px 29px; border-left: 1px solid var(--line); }
+    .truth-grid article:last-child { border-right: 1px solid var(--line); }
+    .truth-grid span { display: block; margin-bottom: 7px; color: var(--green-700); font: 800 10px var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .truth-grid h2 { margin: 0 0 7px; font-size: 16px; }
+    .truth-grid p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.55; }
+
+    .guide-layout { width: min(1480px, calc(100% - 32px)); display: grid; grid-template-columns: 270px minmax(0, 940px); gap: 54px; justify-content: center; margin: 0 auto; padding: 54px 0 90px; }
+    .toc { min-width: 0; }
+    .toc-inner { position: sticky; top: 92px; max-height: calc(100vh - 112px); overflow: auto; padding: 18px; border: 1px solid var(--line); border-radius: 14px; background: #fff; box-shadow: 0 8px 30px rgba(13, 32, 23, .05); }
+    .toc h2 { margin: 0 0 12px; font-size: 14px; }
+    .guide-search { display: grid; grid-template-columns: 1fr auto; gap: 7px; margin-bottom: 10px; }
+    .guide-search input { width: 100%; min-height: 40px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: 8px; background: #fbfcfa; font-size: 13px; }
+    .guide-search button { min-width: 40px; border: 1px solid var(--line-strong); border-radius: 8px; color: var(--muted); background: #fff; }
+    .search-status { min-height: 20px; margin: 0 0 10px; color: var(--muted); font-size: 11px; }
+    .toc nav { display: grid; gap: 2px; }
+    .toc nav a { display: grid; grid-template-columns: 25px 1fr; gap: 7px; align-items: baseline; padding: 6px 7px; border-radius: 7px; color: var(--ink-2); font-size: 12px; line-height: 1.35; text-decoration: none; }
+    .toc nav a span { color: #839087; font: 10px var(--mono); }
+    .toc nav a:hover { color: var(--green-950); background: var(--green-50); }
+    .toc-foot { margin: 14px 0 0; padding-top: 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    .toc-foot a { font-weight: 750; }
+
+    .guide { min-width: 0; }
+    .guide-section { margin-bottom: 72px; scroll-margin-top: 88px; }
+    .guide-section[hidden] { display: none; }
+    .section-kicker { margin: 0 0 8px; color: var(--green-700); font: 800 11px var(--mono); letter-spacing: .14em; text-transform: uppercase; }
+    .guide-section > h2 { max-width: 780px; margin: 0; font-size: clamp(30px, 4vw, 46px); font-weight: 550; letter-spacing: -.045em; line-height: 1.08; }
+    .lead { max-width: 780px; margin: 16px 0 28px; color: var(--muted); font-size: 18px; line-height: 1.6; }
+    .guide h3 { margin: 34px 0 12px; font-size: 22px; letter-spacing: -.025em; line-height: 1.25; }
+    .guide h4 { margin: 26px 0 8px; font-size: 16px; }
+    .guide p { max-width: 820px; }
+    .guide ul,
+    .guide ol { max-width: 820px; padding-left: 22px; }
+    .guide li + li { margin-top: 7px; }
+    code, kbd { font-family: var(--mono); }
+    kbd { padding: 2px 6px; border: 1px solid var(--line-strong); border-bottom-width: 2px; border-radius: 5px; background: #fff; font-size: .82em; }
+    .anchor-link { margin-left: 7px; color: #859087; font-size: .65em; text-decoration: none; opacity: .55; }
+    h2:hover .anchor-link,
+    h3:hover .anchor-link,
+    .anchor-link:focus { opacity: 1; }
+
+    .callout { margin: 22px 0; padding: 19px 21px; border: 1px solid #b9cbbd; border-left: 5px solid var(--green-700); border-radius: 12px; background: var(--green-50); }
+    .callout strong:first-child { display: block; margin-bottom: 4px; color: var(--green-900); }
+    .callout p { margin: 6px 0 0; }
+    .callout.warning { border-color: #e4c489; border-left-color: #a86c0d; background: var(--amber-soft); }
+    .callout.warning strong:first-child { color: #704607; }
+    .callout.danger { border-color: #eab3a5; border-left-color: var(--coral); background: var(--coral-soft); }
+    .callout.danger strong:first-child { color: #7a2f21; }
+    .callout.info { border-color: #b8d0eb; border-left-color: var(--blue); background: var(--blue-soft); }
+    .callout.info strong:first-child { color: #174c8c; }
+
+    .card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 22px 0; }
+    .card-grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { min-width: 0; padding: 20px; border: 1px solid var(--line); border-radius: 13px; background: #fff; box-shadow: 0 5px 18px rgba(13, 32, 23, .035); }
+    .card > span:first-child { display: block; margin-bottom: 8px; color: var(--green-700); font: 800 10px var(--mono); letter-spacing: .1em; text-transform: uppercase; }
+    .card h3,
+    .card h4 { margin: 0 0 7px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .card ul { margin-bottom: 0; font-size: 14px; }
+
+    .step-list { display: grid; gap: 12px; margin: 22px 0; padding: 0 !important; list-style: none; counter-reset: steps; }
+    .step-list > li { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: 14px; padding: 18px 20px; border: 1px solid var(--line); border-radius: 13px; background: #fff; counter-increment: steps; }
+    .step-list > li::before { width: 40px; height: 40px; display: grid; place-items: center; content: counter(steps); border-radius: 11px; color: var(--green-950); background: var(--lime-soft); font: 850 13px var(--mono); }
+    .step-list > li > div > strong:first-child { display: block; margin: 1px 0 3px; font-size: 15px; }
+    .step-list p { margin: 3px 0 0; color: var(--muted); font-size: 14px; }
+
+    .lifecycle { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px; margin: 22px 0 28px; padding: 0 !important; list-style: none; }
+    .lifecycle li { min-height: 80px; position: relative; display: flex; flex-direction: column; justify-content: center; padding: 12px; border: 1px solid #bad0bf; border-radius: 11px; background: #fff; }
+    .lifecycle li:not(:last-child)::after { position: absolute; right: -8px; z-index: 2; content: "›"; color: #64806c; font-size: 22px; }
+    .lifecycle b { font-size: 13px; }
+    .lifecycle small { color: var(--muted); font-size: 10px; line-height: 1.35; }
+
+    .table-wrap { max-width: 100%; overflow-x: auto; margin: 20px 0 28px; border: 1px solid var(--line); border-radius: 13px; background: #fff; }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; line-height: 1.5; }
+    th { color: #edf4ef; background: var(--green-900); font-size: 11px; letter-spacing: .04em; text-align: left; }
+    th, td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+    tbody tr:last-child td { border-bottom: 0; }
+    tbody tr:nth-child(even) td { background: #fafbf8; }
+    td code { font-size: .9em; }
+
+    .word-map { display: grid; grid-template-columns: 1fr 42px 1fr; gap: 10px; align-items: stretch; margin: 22px 0; }
+    .word-map article { padding: 19px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    .word-map > span { display: grid; place-items: center; color: #6b7b70; font-size: 25px; }
+    .word-map h3 { margin: 0 0 7px; font-size: 16px; }
+    .word-map p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    .route-comparison { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+    .route-comparison article { padding: 19px; border: 1px solid var(--line); border-radius: 12px; background: #fff; }
+    .route-comparison article.recommended { border-color: #8db09a; box-shadow: inset 0 4px 0 var(--green-700); }
+    .route-comparison h3 { margin: 0 0 5px; font-size: 16px; }
+    .route-comparison p,
+    .route-comparison li { color: var(--muted); font-size: 13px; }
+    .route-comparison ul { margin-bottom: 0; padding-left: 17px; }
+    .pill { display: inline-flex; align-items: center; min-height: 24px; margin-bottom: 10px; padding: 0 8px; border-radius: 99px; color: #275f39; background: #e4f2e7; font: 800 10px var(--mono); letter-spacing: .05em; text-transform: uppercase; }
+    .pill.optional { color: #6f4a12; background: var(--amber-soft); }
+
+    .checklist { display: grid; gap: 8px; margin: 18px 0; padding: 0 !important; list-style: none; }
+    .checklist li { position: relative; padding: 12px 14px 12px 42px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
+    .checklist li::before { width: 18px; height: 18px; position: absolute; top: 14px; left: 14px; content: ""; border: 2px solid #73907b; border-radius: 4px; background: #fff; }
+    .checklist li::after { position: absolute; top: 11px; left: 18px; content: "✓"; color: var(--green-700); font-weight: 900; opacity: .38; }
+    .checklist small { display: block; color: var(--muted); }
+
+    .shortcut-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin: 20px 0; }
+    .shortcut-grid div { display: flex; justify-content: space-between; gap: 14px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 9px; background: #fff; }
+    .shortcut-grid span { color: var(--muted); font-size: 13px; }
+
+    .doc-map { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 20px 0; }
+    .doc-map a { display: block; padding: 16px; border: 1px solid var(--line); border-radius: 10px; color: var(--ink); background: #fff; text-decoration: none; }
+    .doc-map a:hover { border-color: #9ab0a0; background: var(--green-50); }
+    .doc-map b { display: block; margin-bottom: 3px; }
+    .doc-map span { color: var(--muted); font-size: 12px; }
+
+    .glossary { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 20px 0; }
+    .glossary div { padding: 15px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+    .glossary dt { font-weight: 800; }
+    .glossary dd { margin: 4px 0 0; color: var(--muted); font-size: 13px; }
+
+    details { margin: 10px 0; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+    summary { padding: 14px 16px; cursor: pointer; font-weight: 750; }
+    details > div { padding: 0 16px 16px; color: var(--muted); }
+    details p:last-child { margin-bottom: 0; }
+
+    .no-results { display: none; padding: 38px; border: 1px dashed #9eaba2; border-radius: 14px; color: var(--muted); background: #fff; text-align: center; }
+    .no-results.visible { display: block; }
+    .back-top { display: inline-flex; align-items: center; min-height: 40px; margin-top: 20px; padding: 0 13px; border: 1px solid var(--line-strong); border-radius: 8px; background: #fff; font-size: 12px; font-weight: 750; text-decoration: none; }
+
+    .site-footer { padding: 34px 20px; border-top: 1px solid #294438; color: #c5d1c9; background: var(--green-950); }
+    .footer-inner { width: min(1220px, 100%); display: flex; justify-content: space-between; gap: 30px; margin: 0 auto; }
+    .footer-inner p { max-width: 720px; margin: 0; font-size: 12px; }
+    .footer-inner a { color: var(--lime); }
+
+    @media (max-width: 1060px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 30px; }
+      .hero-route { max-width: 680px; }
+      .truth-grid { grid-template-columns: 1fr; }
+      .truth-grid article { border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+      .guide-layout { grid-template-columns: 1fr; gap: 34px; }
+      .toc-inner { position: static; max-height: none; }
+      .toc nav { grid-template-columns: repeat(3, 1fr); }
+      .lifecycle { grid-template-columns: repeat(3, 1fr); }
+      .lifecycle li:not(:last-child)::after { display: none; }
+    }
+
+    @media (max-width: 720px) {
+      html { scroll-padding-top: 70px; }
+      .header-inner { width: calc(100% - 22px); min-height: 58px; }
+      .brand span:last-child,
+      .header-meta span,
+      .header-meta a { display: none; }
+      .print-button { min-height: 36px; }
+      .hero-inner { width: calc(100% - 30px); padding: 54px 0 48px; }
+      .hero h1 { font-size: clamp(39px, 13vw, 60px); }
+      .hero-actions { display: grid; }
+      .truth-grid { width: calc(100% - 24px); }
+      .truth-grid article { padding: 22px; }
+      .guide-layout { width: calc(100% - 24px); padding-top: 28px; }
+      .toc nav { grid-template-columns: repeat(2, 1fr); }
+      .guide-section { margin-bottom: 58px; }
+      .guide-section > h2 { font-size: 34px; }
+      .card-grid,
+      .card-grid.three,
+      .route-comparison,
+      .doc-map,
+      .glossary,
+      .shortcut-grid { grid-template-columns: 1fr; }
+      .word-map { grid-template-columns: 1fr; }
+      .word-map > span { transform: rotate(90deg); }
+      .lifecycle { grid-template-columns: repeat(2, 1fr); }
+      .step-list > li { grid-template-columns: 38px minmax(0, 1fr); padding: 15px; }
+      .step-list > li::before { width: 34px; height: 34px; }
+      .footer-inner { display: grid; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+    }
+
+    @media print {
+      @page { margin: 14mm; }
+      html, body { color: #000; background: #fff; font-size: 10.5pt; }
+      .site-header,
+      .toc,
+      .hero-actions,
+      .print-button,
+      .back-top,
+      .search-status,
+      .no-results,
+      .site-footer { display: none !important; }
+      .hero { color: #000; background: #fff; }
+      .hero-inner { width: 100%; display: block; padding: 0 0 18px; }
+      .hero h1 { max-width: none; color: #000; font-size: 30pt; }
+      .hero h1 em { color: #000; }
+      .eyebrow,
+      .hero-copy { color: #333; }
+      .hero-route { margin-top: 16px; color: #000; border-color: #888; background: #fff; box-shadow: none; }
+      .hero-route h2,
+      .hero-route strong,
+      .hero-route li { color: #000; }
+      .hero-route li::before { color: #000; background: #fff; }
+      .truth-grid { width: 100%; }
+      .guide-layout { width: 100%; display: block; padding: 22px 0 0; }
+      .guide-section { margin: 0 0 26px; break-before: auto; }
+      .guide-section > h2 { font-size: 22pt; }
+      .lead { font-size: 12pt; }
+      .card,
+      .step-list > li,
+      .callout,
+      .table-wrap,
+      details { break-inside: avoid; box-shadow: none; }
+      a { color: #000; text-decoration: none; }
+      a[href]::after { content: " (" attr(href) ")"; font-size: 8pt; word-break: break-all; }
+      a[href^="#"]::after,
+      .brand::after,
+      .anchor-link::after { content: ""; }
+      details:not([open]) > div,
+      details > div { display: block !important; }
+    }
+  </style>
+</head>
+<body id="top">
+  <a class="skip-link" href="#main-content">Skip to the guide</a>
+
+  <header class="site-header" aria-label="Guide header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="Notice how-to guide home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <b>NOTICE</b>
+        <span>Practical how-to guide</span>
+      </a>
+      <div class="header-meta">
+        <span>CURRENT REPOSITORY GUIDE</span>
+        <a href="../../README.md">Repository overview</a>
+        <button class="print-button" type="button" data-print>Print guide</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <div>
+        <p class="eyebrow">Notice CLM · from first contract to follow-up</p>
+        <h1 id="hero-title">Keep using Word. Add a <em>governed path</em> around it.</h1>
+        <p class="hero-copy">This guide is for a first-time Notice user who knows contracts as Word files, email threads, approval chasers, and signed PDFs. It shows what to do, what Notice records, and where human judgment still belongs.</p>
+        <div class="hero-actions">
+          <a href="#first-contract">Bring in your first contract</a>
+          <a href="#redlines">Run a Word redline round</a>
+          <a href="#implementation">Implement Notice for a business</a>
+        </div>
+      </div>
+      <aside class="hero-route" aria-label="Five-step outcome">
+        <h2>The shortest successful journey</h2>
+        <ol>
+          <li><span><strong>Intake</strong>Submit a published form, upload paper, or use governed/starter paper.</span></li>
+          <li><span><strong>Review</strong>Confirm the saved text, references, owner, risk, currency, and amount.</span></li>
+          <li><span><strong>Negotiate</strong>Exchange one exact file and promote only human-reviewed text.</span></li>
+          <li><span><strong>Approve and sign</strong>Approve the current immutable version, then use DocuSeal.</span></li>
+          <li><span><strong>Operate</strong>Track renewal, notice, reporting, and other obligations.</span></li>
+        </ol>
+      </aside>
+    </div>
+  </section>
+
+  <section class="truth-band" aria-label="Product boundaries">
+    <div class="truth-grid">
+      <article>
+        <span>Ready in the product</span>
+        <h2>The contract workflow</h2>
+        <p>Versioned templates/workflows/intake, immutable working paper, secure review rounds, lane-authority gates, repository citations, signature evidence, obligations, paged work, reporting, permissions, audit history, and integration boundaries are implemented.</p>
+      </article>
+      <article>
+        <span>Installed for each business</span>
+        <h2>The production environment</h2>
+        <p>An implementer provisions Cloudflare resources, identity, providers, secrets, routes, schedules, monitoring, backups, diagnostics, and acceptance evidence.</p>
+      </article>
+      <article>
+        <span>Decided by the customer</span>
+        <h2>Authority and policy</h2>
+        <p>The business approves its legal entities, paper, workflow, intake, playbook, direct/group currency-and-amount authority, signers, retention, provider accounts, data handling, and go-live. A shared repository cannot invent those choices.</p>
+      </article>
+    </div>
+  </section>
+
+  <div class="guide-layout">
+    <aside class="toc" aria-label="Guide navigation">
+      <div class="toc-inner">
+        <h2>In this guide</h2>
+        <div class="guide-search" role="search">
+          <label class="visually-hidden" for="guide-search-input" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0">Search this guide</label>
+          <input id="guide-search-input" type="search" placeholder="Search the guide…" autocomplete="off">
+          <button type="button" id="clear-search" aria-label="Clear guide search">×</button>
+        </div>
+        <p class="search-status" id="search-status" aria-live="polite">All 15 sections shown</p>
+        <nav aria-label="Guide sections">
+          <a href="#start"><span>01</span>Start here</a>
+          <a href="#orientation"><span>02</span>Orientation &amp; roles</a>
+          <a href="#first-contract"><span>03</span>Your first contract</a>
+          <a href="#workspace"><span>04</span>The working paper</a>
+          <a href="#redlines"><span>05</span>Word &amp; redlines</a>
+          <a href="#approvals"><span>06</span>Approvals</a>
+          <a href="#signature"><span>07</span>Signature</a>
+          <a href="#obligations"><span>08</span>Obligations</a>
+          <a href="#find-reuse"><span>09</span>Portfolio, intake &amp; reuse</a>
+          <a href="#history"><span>10</span>History &amp; evidence</a>
+          <a href="#errors"><span>11</span>Errors &amp; retries</a>
+          <a href="#implementation"><span>12</span>Admin &amp; setup</a>
+          <a href="#troubleshooting"><span>13</span>Troubleshooting</a>
+          <a href="#quick-reference"><span>14</span>Quick reference</a>
+          <a href="#glossary"><span>15</span>Glossary &amp; docs</a>
+        </nav>
+        <p class="toc-foot">Need more detail? Open the <a href="../USER_GUIDE.md">authoritative user guide</a>.</p>
+      </div>
+    </aside>
+
+    <main class="guide" id="main-content" tabindex="-1">
+      <div class="no-results" id="no-results" role="status">
+        <strong>No guide section matches that search.</strong>
+        <p>Try a shorter term such as “redline”, “upload”, “approval”, “signature”, or “setup”.</p>
+      </div>
+
+      <section class="guide-section" id="start" data-title="Start here" data-keywords="quick start evaluation production first use basics lifecycle">
+        <p class="section-kicker">01 · Start here</p>
+        <h2>Know which environment you are in <a class="anchor-link" href="#start" aria-label="Link to Start here">#</a></h2>
+        <p class="lead">Evaluation and production look similar, but the evidence is intentionally different. Before doing anything, identify the environment label in the lower-left workspace area.</p>
+
+        <div class="card-grid">
+          <article class="card">
+            <span>Evaluation workspace</span>
+            <h3>Learn with synthetic records</h3>
+            <p>A local synthetic administrator, sample records, sample review cards, and simulated signing help demonstrate the lifecycle. Use synthetic documents only. These actions are not production evidence.</p>
+          </article>
+          <article class="card">
+            <span>Production workspace</span>
+            <h3>Work on customer-owned records</h3>
+            <p>Your verified identity and active workspace membership control access. Documents, approvals, signature evidence, and audit events persist in the configured D1 and R2 resources. Missing configuration fails closed.</p>
+          </article>
+        </div>
+
+        <div class="callout warning">
+          <strong>Do not put real contracts into evaluation mode.</strong>
+          <p>Production use begins only after identity, storage, scanner, signature, delivery, records policy, monitoring, restore, and customer acceptance are complete. A green-looking screen is not go-live approval.</p>
+        </div>
+
+        <h3 id="five-moves">The five moves to remember <a class="anchor-link" href="#five-moves" aria-label="Link to five moves">#</a></h3>
+        <ol class="lifecycle" aria-label="Agreement lifecycle">
+          <li><b>Intake</b><small>Request, upload, or choose governed paper</small></li>
+          <li><b>Draft</b><small>Save the current working text</small></li>
+          <li><b>Review</b><small>Check details and prepare exchange</small></li>
+          <li><b>Negotiation</b><small>Record exact outbound and return</small></li>
+          <li><b>Signature</b><small>Sign the approved version</small></li>
+          <li><b>Active</b><small>Own post-signature work</small></li>
+        </ol>
+
+        <ul class="checklist" aria-label="First sign-in checklist">
+          <li>Confirm the workspace name, environment label, and your signed-in identity.</li>
+          <li>Check that the action you need is visible; Notice hides or disables actions your role cannot perform.</li>
+          <li>Open <strong>Today</strong> for ranked next actions or <strong>Contracts</strong> for the complete register.</li>
+          <li>If production has no records, use its five-step first-use panel—never expect sample parties to appear.</li>
+        </ul>
+      </section>
+
+      <section class="guide-section" id="orientation" data-title="Orientation and roles" data-keywords="navigation contracts today permissions requester approver legal viewer admin keyboard search tabs">
+        <p class="section-kicker">02 · Orientation &amp; roles</p>
+        <h2>One record; several ways into it <a class="anchor-link" href="#orientation" aria-label="Link to orientation and roles">#</a></h2>
+        <p class="lead">Today, Portfolio &amp; work, Contracts, Request intake, Repository, Approvals, Signatures, and Post-signature tasks are different paths into the same governed contract estate. Opening a row takes you to the exact agreement, and the Back control remembers where you came from.</p>
+
+        <h3 id="navigation">Main navigation <a class="anchor-link" href="#navigation" aria-label="Link to main navigation">#</a></h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Area</th><th>Use it for</th><th>What opens</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Today</strong></td><td>Ranked work and current operational counts</td><td>The relevant tab of the source contract</td></tr>
+              <tr><td><strong>Portfolio &amp; work</strong></td><td>Cursor-paged approvals, signatures, obligations, schedules, history, and estate reporting</td><td>The exact contract plus per-currency portfolio context</td></tr>
+              <tr><td><strong>Contracts</strong></td><td>Search, filter, sort, upload, or start from a template</td><td>The selected contract workspace</td></tr>
+              <tr><td><strong>Request intake</strong></td><td>Complete, save, submit, and route a published structured form for Legal/Admin conversion or rejection</td><td>One contract pinned to the exact form/template/workflow basis—or one immutable rejected request</td></tr>
+              <tr><td><strong>Approvals</strong></td><td>Pending decisions and approval context</td><td>Contract Details and the exact approval work</td></tr>
+              <tr><td><strong>Signatures</strong></td><td>Packets ready, in flight, completed, or requiring reconciliation</td><td>The source contract or signature flow</td></tr>
+              <tr><td><strong>Post-signature tasks</strong></td><td>Renewal, notice, reporting, and other owned obligations</td><td>Contract Details and the obligation record</td></tr>
+              <tr><td><strong>Repository</strong></td><td>Search extractor-registered fragments and review cited extraction proposals</td><td>Registered text is pinned to an immutable document version/hash but must be verified against protected paper; proposal acceptance cannot mutate data</td></tr>
+              <tr><td><strong>Templates / Approved clauses</strong></td><td>Published governed paper, ungoverned starters, and company-approved language</td><td>The generation wizard or current draft</td></tr>
+              <tr><td><strong>Integrations</strong></td><td>Understand available CRM adapters and server-reported connection state</td><td>Redacted setup context; never provider secrets</td></tr>
+              <tr><td><strong>Setup &amp; access</strong></td><td>Opens admin preflight, members, providers, and the Enterprise setup center for entities, counterparties, groups, custom fields, governed artifacts, authorities, agents, records, and export</td><td>Admin-only operating controls</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="roles">What each workspace role can usually do <a class="anchor-link" href="#roles" aria-label="Link to roles">#</a></h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Role</th><th>Typical access</th><th>Important limit</th></tr></thead>
+            <tbody>
+              <tr><td><code>requester</code></td><td>Read, create or import, request approval, read obligations and approved clauses, add comments</td><td>Does not manage or promote working-paper versions</td></tr>
+              <tr><td><code>approver</code></td><td>Read context, claim an eligible unassigned request, decide a request assigned to them</td><td>Cannot decide their own request; lane/currency/amount authority is checked separately</td></tr>
+              <tr><td><code>legal</code></td><td>Manage contracts, document versions, review rounds, approvals, obligations, language, comments, and reminders</td><td>Broad technical power is not proof of business authority</td></tr>
+              <tr><td><code>viewer</code></td><td>Read contracts, files, approvals, obligations, language, activity, and evidence</td><td>No mutation authority; read access still exposes contract data</td></tr>
+              <tr><td><code>admin</code></td><td>All product actions plus access, diagnostics, retention/holds, and export</td><td>Use least privilege and individual accounts; keep at least two active admins</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="callout info">
+          <strong>Workspace roles and approval lanes are different things.</strong>
+          <p>The lowercase <code>legal</code> role is an identity permission set. Capitalized <code>Legal</code> and <code>Finance</code> are approval lanes. Claim and decision also require active direct-user or active-group authority for the exact lane, currency, and optional minor-unit ceiling. A lane with no authority record uses a narrow compatibility mapping; creating or revoking any record turns that lane's fallback off and unmatched users fail closed.</p>
+        </div>
+
+        <h3 id="shortcuts">Useful keyboard controls <a class="anchor-link" href="#shortcuts" aria-label="Link to keyboard controls">#</a></h3>
+        <div class="shortcut-grid">
+          <div><span>Open global search</span><span><kbd>⌘ K</kbd> / <kbd>Ctrl K</kbd></span></div>
+          <div><span>Focus global search</span><kbd>/</kbd></div>
+          <div><span>Start from a template</span><kbd>N</kbd></div>
+          <div><span>Close a dialog or mobile navigation</span><kbd>Esc</kbd></div>
+          <div><span>Move among contract tabs</span><span><kbd>←</kbd> <kbd>→</kbd></span></div>
+          <div><span>First or last contract tab</span><span><kbd>Home</kbd> <kbd>End</kbd></span></div>
+          <div><span>Move among Portfolio or Setup tabs</span><span><kbd>←</kbd> <kbd>→</kbd> <kbd>Home</kbd> <kbd>End</kbd></span></div>
+        </div>
+        <p>Single-key shortcuts do not fire while you are typing in a field, text area, selection control, or editable text region. Tab enters the active panel; Escape closes supported disclosures/navigation and returns focus to the opener.</p>
+      </section>
+
+      <section class="guide-section" id="first-contract" data-title="Your first contract" data-keywords="generate template upload import PDF DOCX RTF text intake source scanner suggestions review staged upload retry">
+        <p class="section-kicker">03 · Your first contract</p>
+        <h2>Start from paper you have—or paper you need <a class="anchor-link" href="#first-contract" aria-label="Link to your first contract">#</a></h2>
+        <p class="lead">Three governed paths can create one contract record. Choose the path that matches the request and the source paper.</p>
+
+        <div class="card-grid three">
+          <article class="card">
+            <span>Generate</span>
+            <h3>Start from a template</h3>
+            <p>Use this when the business is preparing its own first draft. Choose an exact published governed version or a clearly marked ungoverned starter, bind business data, and review the saved working draft.</p>
+          </article>
+          <article class="card">
+            <span>Import</span>
+            <h3>Upload existing paper</h3>
+            <p>Use this when a counterparty or colleague supplied a PDF, DOCX, RTF, or text file. Review every suggestion against the source before creating or linking the record.</p>
+          </article>
+          <article class="card">
+            <span>Request</span>
+            <h3>Complete published intake</h3>
+            <p>Use this when an administrator published structured questions with an exact template-version and workflow pin. Submission freezes answers; human-confirmed conversion creates one linked contract.</p>
+          </article>
+        </div>
+
+        <h3 id="generate">Route A: start from a template <a class="anchor-link" href="#generate" aria-label="Link to template generation">#</a></h3>
+        <ol class="step-list">
+          <li><div><strong>Select “Start from template”.</strong><p>Open it from Today, Contracts, Templates, global search, or press <kbd>N</kbd> when focus is not in a field.</p></div></li>
+          <li><div><strong>Choose contract direction.</strong><p>Customer contract, Supplier contract, or Company contract narrows the paper family.</p></div></li>
+          <li><div><strong>Choose the governance class.</strong><p>A published governed card shows its exact immutable version and digest. An ungoverned starter is useful scaffolding but is not automatically your company's approved legal paper.</p></div></li>
+          <li><div><strong>Enter the business context.</strong><p>Counterparty is required. Optional value uses a three-letter currency and supported zero-, two-, or three-decimal minor units; owner, department, governing law, structured entity/counterparty, published workflow, and an enabled CRM source provide context. Notice performs no FX conversion.</p></div></li>
+          <li><div><strong>Review before creating.</strong><p>Check the direction, exact paper class/version, fields, currency, references, workflow, and complete assembled text. Notice does not request approvals during intake.</p></div></li>
+          <li><div><strong>Open the working draft.</strong><p>Notice creates the contract record and immutable first working version together. Review and negotiate that exact paper before explicitly routing approvals.</p></div></li>
+        </ol>
+
+        <h3 id="import">Route B: upload existing paper <a class="anchor-link" href="#import" aria-label="Link to import">#</a></h3>
+        <ol class="step-list">
+          <li><div><strong>Select “Upload a contract”.</strong><p>Choose a PDF, DOCX, RTF, or text file up to 20 MiB. Notice inspects the complete bounded bytes instead of trusting the filename or MIME label: text must satisfy UTF-8/control rules, RTF must be balanced without binary/object payloads, PDF must have the expected header/trailer/xref and referenced-object structure, and DOCX must be a canonical bounded ZIP with safe consistent entries and required-OOXML-part structure. These checks do not replace malware scanning or human review. In production, clean files proceed; scanner-unavailable or inconclusive files remain quarantined; invalid or malicious content is rejected.</p></div></li>
+          <li><div><strong>Review the proposed fields.</strong><p>Confirm parties, direction, type, dates, value, payment/renewal text, governing law, tags, and review flags against the actual document. The analyzer has no extracted currency field, so an imported amount starts as USD; correct currency and amount in Contract details before risk review or routing. Suggestions are not legal conclusions or confidence scores.</p></div></li>
+          <li><div><strong>Correct what is wrong.</strong><p>Production performs bounded plain-text/RTF extraction in the Worker and limits PDF/DOCX parsing there to the structural checks above. It does not render those formats, extract their document text, or interpret their content or tracked changes: linking uses the deployment-selected customer-hosted OCR profile through the signed scanner gateway, or the explicitly disabled human-reviewed-text path.</p></div></li>
+          <li><div><strong>Create or link the record.</strong><p>Notice stores clean source bytes in private object storage with a hash and stores its metadata in the database. If readable text exists, it also creates an immutable first working version.</p></div></li>
+          <li><div><strong>Open the source safely.</strong><p>Download later only through the protected contract route. Deployment administrators select one customer-hosted OCR model/profile for the environment; individual uploaders get no model picker, and Notice hosts no model. Output is source-hash/profile bound but still needs comparison with the protected paper; an outage never falls back.</p></div></li>
+        </ol>
+
+        <h3 id="published-intake">Route C: submit published intake <a class="anchor-link" href="#published-intake" aria-label="Link to published intake">#</a></h3>
+        <ol class="step-list">
+          <li><div><strong>Open Request intake.</strong><p>Choose a published form and verify its version. Typed fields may include text, number, date, yes/no, single-select, or multi-select questions.</p></div></li>
+          <li><div><strong>Save and review the draft.</strong><p>Your request history keeps the draft, answers, and exact form version together while the form remains published. If an administrator retires the form, the history remains but the draft cannot be resumed; admins should resolve or communicate outstanding drafts first.</p></div></li>
+          <li><div><strong>Submit only when complete.</strong><p>Submission requires confirmation and freezes the answers. It does not make a legal or risk decision.</p></div></li>
+          <li><div><strong>Review as Legal/Admin.</strong><p>Confirm the exact form version, template-version pin when present, workflow choice, counterparty, direction, type, currency/amount, department, and reason. The signed-in reviewer becomes initial owner; structured entity/counterparty references are set afterward in Contract details. A Requester sees frozen history but cannot convert it.</p></div></li>
+          <li><div><strong>Convert or reject.</strong><p>Conversion atomically creates the Intake-stage agreement, initial snapshot, audit event, optional CRM event, and conversion link. It does not create working paper; add a source or save the first reviewed working version next. If the request should not proceed, Legal/Admin records a reason and confirms immutable rejection instead.</p></div></li>
+        </ol>
+
+        <div class="callout">
+          <strong>If upload or creation times out, retry the same intake.</strong>
+          <p>Notice uses an idempotency key and same-tab recovery so a reload or timeout does not silently create a duplicate. Once agreement creation has been attempted, the intake fields stay frozen for an exact retry. Use <strong>Discard staged upload</strong> before creation only when the wrong file was selected. The abandoned protected source then remains eligible for guarded cleanup after seven days.</p>
+        </div>
+      </section>
+
+      <section class="guide-section" id="workspace" data-title="The working paper" data-keywords="working draft edit save immutable version hash download conflict unsaved tabs details source document approved clause">
+        <p class="section-kicker">04 · The working paper</p>
+        <h2>Treat the saved version as the contract—not the browser buffer <a class="anchor-link" href="#workspace" aria-label="Link to the working paper">#</a></h2>
+        <p class="lead">Every contract workspace has four tabs. Together they separate current paper, negotiation evidence, authoritative details, and history.</p>
+
+        <div class="card-grid">
+          <article class="card"><span>Tab 1</span><h3>Working draft</h3><p>Current durable text, immutable versions, approved-clause insertion, linked source files, version number, and SHA-256.</p></article>
+          <article class="card"><span>Tab 2</span><h3>Review &amp; redlines</h3><p>Production review rounds, returned-file states, human-review notes, line comparison, and promotion. Evaluation has sample clause cards only.</p></article>
+          <article class="card"><span>Tab 3</span><h3>Contract details</h3><p>Structured counterparty/entity, type, direction, department, minor-unit currency/amount, workflow, owner, dates, CRM label, risk, approvals, obligations, relationships, and admin records controls.</p></article>
+          <article class="card"><span>Tab 4</span><h3>History &amp; comments</h3><p>Server-attributed workflow events, comments, hashes, export actions, and formal audit evidence.</p></article>
+        </div>
+        <p><strong>Parties &amp; related contracts</strong> adds structured roles and links such as master, order-under, amendment, DPA, renewal, and supersession without rewriting working paper. Removing a link requires a reason and confirmation and does not delete the underlying party, contract, paper, or audit evidence.</p>
+
+        <h3 id="save-version">Edit and save safely <a class="anchor-link" href="#save-version" aria-label="Link to edit and save">#</a></h3>
+        <ol class="step-list">
+          <li><div><strong>Wait for the latest version to load.</strong><p>Notice blocks editing and export if durable storage cannot load the authoritative paper. It never substitutes starter text as if that were current.</p></div></li>
+          <li><div><strong>Select “Edit working draft”.</strong><p>Your changes live only in the current browser tab until saved.</p></div></li>
+          <li><div><strong>Make the complete intended change.</strong><p>A legal or admin user can append an approved clause to the current editor buffer without discarding existing unsaved work; other permitted roles can read the library.</p></div></li>
+          <li><div><strong>Select “Save version”.</strong><p>Notice writes immutable content bytes, records the next version and SHA-256, advances the contract aggregate version, and appends an audit event.</p></div></li>
+          <li><div><strong>Confirm the new version and hash.</strong><p>The toolbar names the exact saved paper. If another user changed the record first, Notice asks you to reload rather than overwrite the newer version.</p></div></li>
+        </ol>
+
+        <div class="callout warning">
+          <strong>Unsaved work is not evidence.</strong>
+          <p>Leaving the contract, switching tabs or contracts, or cancelling after editing opens a <strong>Save / Discard / Stay</strong> decision. Refreshing or closing the browser triggers its unsaved-changes warning. In Review &amp; redlines, reviewed text and notes are also browser-only until you complete the review action.</p>
+        </div>
+
+        <h3 id="download-draft">Download the right thing <a class="anchor-link" href="#download-draft" aria-label="Link to downloads">#</a></h3>
+        <ul>
+          <li><strong>Download saved draft (.txt)</strong> exports only the durable version named in the toolbar; it is disabled while unsaved editing is open.</li>
+          <li><strong>Linked source documents</strong> download through the protected document route and retain their original filename and hash context.</li>
+          <li><strong>Returned review files</strong> download from the selected submission in Review &amp; redlines.</li>
+          <li><strong>Audit evidence</strong> is a separate signed JSON envelope from History &amp; comments; a text draft is not the audit package.</li>
+        </ul>
+      </section>
+
+      <section class="guide-section" id="redlines" data-title="Word and redlines" data-keywords="negotiation redline DOCX track changes comments portal email manual outbound inbound returned file scan quarantine sender review promotion comparison rotate revoke link">
+        <p class="section-kicker">05 · Word &amp; redlines</p>
+        <h2>Use Word for the document review; use Notice for custody and decision <a class="anchor-link" href="#redlines" aria-label="Link to Word and redlines">#</a></h2>
+        <p class="lead">Notice makes the exchange traceable: which exact bytes went out, which exact bytes came back, how the return was scanned, who reviewed it, and which reviewed text became the next working version.</p>
+
+        <div class="callout danger">
+          <strong>Notice stores a DOCX, but does not automatically parse, apply, accept, or approve its tracked changes.</strong>
+          <p>Notice does not parse Word Track Changes into clause decisions or accept them automatically. For a returned DOCX, a human must open the exact downloaded file in Microsoft Word or another customer-approved review environment and inspect tracked changes, comments, formatting, headers, footers, schedules, fields, hidden content, and the complete clean rendering. The browser line comparison uses only saved text and text you enter; it does not inspect the DOCX binary or make a legal verdict.</p>
+        </div>
+
+        <div class="word-map" aria-label="Word and Notice responsibilities">
+          <article><h3>In Microsoft Word</h3><p>Inspect the exact returned document, every tracked change and comment, complete formatting and schedules, hidden or field content, and the clean final reading.</p></article>
+          <span aria-hidden="true">↔</span>
+          <article><h3>In Notice</h3><p>Download the hash-bound return, record reviewed text and a review note, compare text at line level, then explicitly promote or reject the selected submission.</p></article>
+        </div>
+
+        <h3 id="round-workflow">A complete review round <a class="anchor-link" href="#round-workflow" aria-label="Link to complete review round">#</a></h3>
+        <ol class="step-list">
+          <li><div><strong>Save the complete proposed paper.</strong><p>Confirm the current working version, structured parties, type, direction, risk, currency/amount, workflow, and owner.</p></div></li>
+          <li><div><strong>Prepare one round.</strong><p>Notice permits one active round per contract. It copies the latest immutable working version—or an eligible clean source when no working version exists—records its full SHA-256, moves the contract to Negotiation, and prevents another active round or signature packet from using it concurrently.</p></div></li>
+          <li><div><strong>Verify the recipient outside Notice.</strong><p>Confirm the name and email using the business's approved contact process. Possession of a portal URL is not independent identity proof.</p></div></li>
+          <li><div><strong>Copy the temporary portal URL when it appears.</strong><p>It is shown when issued and is a bearer credential. The round stores only its hash; manual use does not let Notice redisplay plaintext after page state is lost. Share it only with the prepared counterparty. Rotation revokes the URL but does not reset that round's transfer budget.</p></div></li>
+          <li><div><strong>Send through an approved route.</strong><p>For a first wealth-management pilot, prefer manual delivery from the approved contracting mailbox and record the bounded provider/message reference. Automated delivery needs the scoped portal, configured delivery gateway, and separate negotiation-mail acceptance gate. While delivery is queued or processing, rotation, closure, and promotion remain blocked.</p></div></li>
+          <li><div><strong>Wait for a returned file.</strong><p>The portal accepts one file per submission. Signed inbound email, when separately enabled, can record zero through five attachments. Each file is capped at 20 MiB; the portal request is capped at 21 MiB. Across token rotations, one round admits at most 10 portal uploads: no more than 4 accepted returns, no more than 6 rejected/failed attempts, and no more than 96 MiB of cumulative multipart bytes. Only one five-minute upload/scan lease runs at a time. Downloads are capped at 20 attempts and 256 MiB. A busy response says to retry after five seconds; exhaustion requires staff to prepare a new round.</p></div></li>
+          <li><div><strong>Check the return state before opening anything.</strong><p>Only a clean, <code>ready</code>, policy-eligible submission on the latest active round can be promoted after human review. A portal submitter types an email address; a match is not authenticated identity or proof of mailbox control. Quarantined, rejected, sender-review, late, or no-attachment records require the specific remediation below.</p></div></li>
+          <li><div><strong>Download and review the exact source in Word.</strong><p>Do not work from an attachment in an old email thread or from a similarly named local copy. Use the protected file tied to the selected Notice submission and check its displayed hash.</p></div></li>
+          <li><div><strong>Enter the complete reviewed text and note.</strong><p>For exactly one attachment, supply plain text or Markdown that you personally reconciled to that file. Record who reviewed it, how Word/PDF features were checked, and why this is the intended working text.</p></div></li>
+          <li><div><strong>Promote deliberately—or reject.</strong><p>Promotion creates a new immutable working version, binds it to the return hash and review provenance, resolves the round, revokes the portal, invalidates old approvals, and clears signature readiness. Rejection or closure keeps the evidence without replacing the paper.</p></div></li>
+        </ol>
+
+        <h3 id="delivery-choice">Choose the exchange route <a class="anchor-link" href="#delivery-choice" aria-label="Link to exchange route">#</a></h3>
+        <div class="route-comparison">
+          <article class="recommended">
+            <span class="pill">Recommended first pilot</span>
+            <h3>Manual email + portal</h3>
+            <p>Copy the temporary link, send it from the approved contracting mailbox, and record a bounded message/provider reference.</p>
+            <ul><li>Simple operational start</li><li>Portal is the return route</li><li>Reference is an attestation, not delivery proof</li></ul>
+          </article>
+          <article>
+            <span class="pill optional">After acceptance</span>
+            <h3>Automated outbound</h3>
+            <p>Notice queues a signed event to the configured delivery gateway with explicit recipient, subject, body, and scoped link.</p>
+            <ul><li>No attachment bytes are claimed</li><li>Gateway acceptance is not recipient receipt</li><li>Terminal failure requires a fresh round</li></ul>
+          </article>
+          <article>
+            <span class="pill optional">Optional integration</span>
+            <h3>Inbound email capture</h3>
+            <p>A dedicated domain and signed raw-body gateway route replies to a generated per-round alias.</p>
+            <ul><li>Not required for portal use</li><li>Needs separate conformance evidence</li><li>Never auto-promotes clean attachments</li></ul>
+          </article>
+        </div>
+
+        <div class="callout warning">
+          <strong>Portal-link rules</strong>
+          <p>Treat the URL like a temporary password. Do not paste it into CRM notes, ordinary tickets, chat, analytics, or the contract text. Rotation revokes the old URL immediately but does not reset the round's durable upload/download budgets. Closing or resolving the round revokes the current URL. An upload does not consume the URL by itself. Queued or processing automated delivery blocks rotation, closure, and promotion; wait for an accepted or terminal state. If leakage, wrong delivery, or transfer-budget exhaustion is suspected, follow the incident procedure—do not improvise a resend or bypass the round by rotating its token.</p>
+        </div>
+
+        <h3 id="return-states">Understand returned-file states <a class="anchor-link" href="#return-states" aria-label="Link to returned file states">#</a></h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>State</th><th>Meaning</th><th>What to do</th></tr></thead>
+            <tbody>
+              <tr><td><code>ready</code></td><td>Saved attachment is clean and policy-eligible for human review; portal sender text is not authenticated identity</td><td>Download the exact file, review it, then record a decision; “ready” is not verified sender identity or legally acceptable paper</td></tr>
+              <tr><td><code>sender_review</code></td><td>File is clean, but the supplied sender address did not match the prepared counterparty or signed-email authentication was not aligned</td><td>Independently verify identity and record the reason before an authorized reviewer marks it ready</td></tr>
+              <tr><td><code>quarantined</code></td><td>Scanner did not establish a trusted clean result</td><td>Do not download or promote; run an approved rescan after scanner recovery</td></tr>
+              <tr><td><code>rejected</code></td><td>Content was invalid, malicious, or deliberately rejected</td><td>Keep it out of the working draft and request a safe replacement</td></tr>
+              <tr><td><code>late</code></td><td>Authorized staff deliberately recorded evidence after a round was no longer active</td><td>Preserve as evidence; start a fresh round if it should become working paper</td></tr>
+              <tr><td><code>no_attachment</code></td><td>A signed inbound message arrived without a returned file</td><td>Review the message evidence and ask for a portal/file return; nothing can be promoted</td></tr>
+              <tr><td><code>promoted</code></td><td>Reviewed text from this source became a new immutable working version</td><td>Review the new version/hash and route fresh approvals</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="comparison">What the comparison can—and cannot—tell you <a class="anchor-link" href="#comparison" aria-label="Link to comparison">#</a></h3>
+        <ul>
+          <li>It deterministically compares the saved current draft with the reviewed plain text or Markdown you entered.</li>
+          <li>It reports added, removed, and aligned unchanged lines, and may use coarse alignment for large edits.</li>
+          <li>It may display only the first 240 changed lines; review the complete texts.</li>
+          <li>No displayed differences means only that those two text inputs align line-for-line.</li>
+          <li>It does not inspect a binary attachment, prove there were no Word changes, apply a playbook, or make a legal, policy, risk, or acceptance decision.</li>
+        </ul>
+
+        <div class="callout info">
+          <strong>Evaluation redline cards are demonstrations only.</strong>
+          <p>The synthetic Accept/Reject clause cards and sample standard/fallback positions are not persisted production redline decisions. Production uses the controlled round, file, review, and promotion workflow described above. The separate Repository workspace searches extractor-registered fragments pinned to an immutable document version/hash; their source-text digest, offsets, and content are caller-supplied and must be checked against protected working paper. Human acceptance remains blocked from mutating contract data and is not a legal verdict.</p>
+        </div>
+      </section>
+
+      <section class="guide-section" id="approvals" data-title="Approvals" data-keywords="Legal Finance required pending claim decide requester separation reminder lane policy exact version changes requested">
+        <p class="section-kicker">06 · Approvals</p>
+        <h2>Approve the exact paper—not the idea of the deal <a class="anchor-link" href="#approvals" aria-label="Link to approvals">#</a></h2>
+        <p class="lead">Notice binds approval work to the current immutable working version, its SHA-256, and the material contract basis. A promoted redline makes previous approvals stale and sends the current paper back through routing.</p>
+
+        <h3 id="approval-states">Required is not Pending <a class="anchor-link" href="#approval-states" aria-label="Link to approval states">#</a></h3>
+        <div class="card-grid three">
+          <article class="card"><span>Required</span><h3>Routing is needed</h3><p>The current contract must be approved, but no complete current request set exists yet.</p></article>
+          <article class="card"><span>Pending</span><h3>Decisions are open</h3><p>One or more requests tied to the current paper and basis await an authorized decision.</p></article>
+          <article class="card"><span>Approved</span><h3>All current lanes passed</h3><p>Every current approval request—including any additional current lane—is approved for this exact basis.</p></article>
+        </div>
+
+        <h3 id="starter-policy">Governed workflow or compatibility policy <a class="anchor-link" href="#starter-policy" aria-label="Link to approval policy">#</a></h3>
+        <p>A selected published workflow snapshots its exact definition digest and evaluated lanes onto the agreement. The bounded workflow contract supports one to twenty unique lanes, at least one unconditional lane, and ANDed conditions over direction, agreement type, department, risk/disposition, exact currency, and minimum/maximum minor-unit amount. That stored snapshot is authoritative for routing.</p>
+        <p>When no governed workflow is selected, the compatibility starter policy is:</p>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Condition</th><th>Server-required approval lane</th></tr></thead>
+            <tbody>
+              <tr><td>Every agreement explicitly routed for approval</td><td><code>Legal</code></td></tr>
+              <tr><td>Risk is High, assessment was waived, USD value is greater than 100,000, or any material non-USD value is recorded</td><td><code>Finance</code> in addition to <code>Legal</code></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Arbitrary extra labels cannot substitute for required lanes. Notice stores non-negative minor units plus an uppercase three-letter currency code using supported zero-, two-, and three-decimal mappings. It performs no FX conversion and never uses a cross-currency total for approval policy.</p>
+
+        <div class="callout danger">
+          <strong>Authority is configured and rechecked—not inferred from a role label.</strong>
+          <p>Direct-user or active-group authority must cover the exact lane and currency and may carry a minor-unit ceiling. A lane with no authority record at all uses the narrow compatibility mapping: admin/legal for Legal, admin/approver for Finance, and admin for another lane. Creating or revoking any record disables fallback for that lane; an unmatched user fails closed. Setup &amp; access provides bounded builders and lifecycle actions, not an automatic legal conclusion or general no-code policy engine.</p>
+        </div>
+
+        <h3 id="approve-step">Request, claim, and decide <a class="anchor-link" href="#approve-step" aria-label="Link to approval steps">#</a></h3>
+        <ol class="step-list">
+          <li><div><strong>Finish negotiation and save the exact intended paper.</strong><p>Confirm version, SHA-256, counterparty, value, dates, and other material details.</p></div></li>
+          <li><div><strong>Assess the exact paper.</strong><p>Legal or Admin records Low, Medium, or High with a rationale and explicit confirmation against the displayed version, SHA-256, and basis. Only Admin may waive assessment, and a waiver conservatively requires both Legal and Finance.</p></div></li>
+          <li><div><strong>Use the stage-aware action to request approval.</strong><p>Requester, legal, and admin members can request the required lane set. Notice creates missing required requests atomically.</p></div></li>
+          <li><div><strong>Open the agreement before deciding.</strong><p>Read the current paper and Details, not an old email attachment or a remembered version.</p></div></li>
+          <li><div><strong>Claim only with real authority.</strong><p>The server checks active direct/group authority—or the no-record compatibility mapping—for the exact lane, currency, and amount, then repeats the predicate when committing. The requester cannot claim or decide the same request.</p></div></li>
+          <li><div><strong>Approve or Request changes.</strong><p>The decision, actor, time, exact-paper evidence, contract aggregate, and audit event persist. Every current request, including any additional current lane, must approve before the aggregate becomes Approved; each required lane needs a distinct attributable decider. Nobody—including legal or admin—can decide a request they created.</p></div></li>
+        </ol>
+        <p><strong>Send reminder</strong> queues reminder work; it does not mean an email was delivered. The scheduled outbox and configured delivery gateway handle external delivery and retries.</p>
+      </section>
+
+      <section class="guide-section" id="signature" data-title="Signature" data-keywords="DocuSeal signer roles ordered emails packet create reconcile webhook completed artifact PDF archived superseded refresh simulation">
+        <p class="section-kicker">07 · Signature</p>
+        <h2>Send only the approved immutable version <a class="anchor-link" href="#signature" aria-label="Link to signature">#</a></h2>
+        <p class="lead">Production signature uses the pinned DocuSeal 3.2.1 release and API contract 1.0.24. Notice validates a configured non-public, non-archived template, discovers its ordered signer roles, renders the verified working paper into a one-off document, and relies on provider email delivery—without exposing signer bearer URLs in the product.</p>
+
+        <ol class="step-list">
+          <li><div><strong>Confirm eligibility.</strong><p>The contract must be in Signature and all required approvals must still cover its exact working version, SHA-256, and material basis.</p></div></li>
+          <li><div><strong>Open the signature flow.</strong><p>Notice reads one to ten ordered roles from the configured DocuSeal template and requires at least one required signature or initials field for every role.</p></div></li>
+          <li><div><strong>Enter a name and a unique email for every role.</strong><p>Names need not be unique, but normalized signer emails must be. Provider-discovered roles are read-only, and the server rejects missing, duplicate, reordered, or substituted role/email sets.</p></div></li>
+          <li><div><strong>Create the secure packet once.</strong><p>Notice SHA-256 verifies the immutable working bytes, decodes and escapes the text/Markdown into a one-off HTML document, combines it with the approved signature-page/template, requests one merged artifact, applies the configured 1–720-hour expiration and email 2FA, and asks DocuSeal to send invitations.</p></div></li>
+          <li><div><strong>Refresh or reconcile—do not duplicate.</strong><p>If creation remains <code>creating</code> or signer state appears stale, use the available reconciliation/refresh action on the existing packet.</p></div></li>
+          <li><div><strong>Reconcile, then review the retained artifact.</strong><p>Notice requires exact signer identity/email and completed status for every expected signer, retrieves exactly one signed artifact, scans it, stores evidence, and stops at human review. Legal/Admin must confirm the exact artifact, paper hashes, version, and approved basis before activation.</p></div></li>
+        </ol>
+
+        <div class="callout warning">
+          <strong>Provider status is persisted, not silently polled.</strong>
+          <p>Use <strong>Refresh provider state</strong> when a webhook needs reconciliation. If provider mapping did not finish, use <strong>Reconcile provider packet</strong> rather than creating another. After one hour, an admin may use the guarded absence check; an archived submission remains reserved unless a fresh provider check supports explicit supersession.</p>
+        </div>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>State or symptom</th><th>Safe response</th></tr></thead>
+            <tbody>
+              <tr><td>Packet is still <code>creating</code></td><td>Reconcile the same packet; DocuSeal may already have accepted it</td></tr>
+              <tr><td>Packet is <code>archived</code></td><td>Refresh; admin may supersede only after Notice freshly confirms archived/pending state</td></tr>
+              <tr><td>Packet is <code>superseded</code></td><td>Preserve it; it cannot activate the current contract</td></tr>
+              <tr><td>Late completion is <code>completed_superseded</code></td><td>Retain signed evidence, but route current paper again; do not relabel it Active</td></tr>
+              <tr><td>Signer progress looks stale</td><td>Refresh provider state and inspect webhook/provider operations; do not hand-edit evidence</td></tr>
+              <tr><td>Evaluation “Simulate completion” is visible</td><td>Use only with synthetic records; it contacts no provider and creates no production evidence</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="guide-section" id="obligations" data-title="Obligations" data-keywords="post-signature renewal notice reporting task due date owner complete evidence active contract">
+        <p class="section-kicker">08 · Obligations</p>
+        <h2>Turn signed promises into owned work <a class="anchor-link" href="#obligations" aria-label="Link to obligations">#</a></h2>
+        <p class="lead">Once a contract is Active or signature is completed, a permitted member can create one-time or recurring schedules, work their materialized occurrences, manage ownership and future generation, and complete each occurrence with immutable evidence.</p>
+
+        <ol class="step-list">
+          <li><div><strong>Open Post-signature tasks.</strong><p>Use Open, Complete, or All to focus the operating queue.</p></div></li>
+          <li><div><strong>Select “Add obligation”.</strong><p>Only eligible Active or completed contracts are offered.</p></div></li>
+          <li><div><strong>Describe the work and source.</strong><p>Use a concrete, action-led title and cite the governing clause or policy. Examples: “Send non-renewal notice”, “Collect updated SOC 2 report”, or “Review price uplift”.</p></div></li>
+          <li><div><strong>Choose an eligible owner, first due date, and recurrence.</strong><p>Use Once, Weekly, Monthly, Quarterly, or Annual with the IANA time zone, reminder lead days, and optional inclusive end date required by the operating policy. Calendar recurrence remains anchored to the original date.</p></div></li>
+          <li><div><strong>Manage the schedule deliberately.</strong><p>Legal/Admin can reassign it and all open occurrences, pause or resume future generation, or irreversibly end it with a reason and confirmation. Existing open occurrences stay actionable.</p></div></li>
+          <li><div><strong>Complete with evidence.</strong><p>The assigned owner records a ticket, confirmation, outcome, or other evidence note. A Legal/Admin override requires a reason. The result, evidence SHA-256, attribution, and audit event are immutable.</p></div></li>
+        </ol>
+
+        <p>Obligation-write members create and manage schedules; eligible assigned owners may fulfill their own occurrences. Notice refuses to offboard an owner while active/paused schedules or open occurrences remain assigned. It does not infer obligations from the signed PDF; a human identifies, confirms, and governs the work.</p>
+      </section>
+
+      <section class="guide-section" id="find-reuse" data-title="Portfolio, intake, repository, and reuse" data-keywords="portfolio work items cursor intake repository citations proposal ingestion saved views search command contracts filter sort templates approved clauses language library insert CRM Salesforce HubSpot custom integrations setup">
+        <p class="section-kicker">09 · Portfolio, intake &amp; reuse</p>
+        <h2>See the estate, verify registered sources, and reuse only governed building blocks <a class="anchor-link" href="#find-reuse" aria-label="Link to portfolio intake and reuse">#</a></h2>
+        <p class="lead">Server-backed portfolio/work, governed request intake, registered-fragment repository intelligence, global search, templates, and Approved clauses cover different jobs. The customer—not the software—still decides which content and judgment are authorized.</p>
+
+        <h3 id="portfolio-work">Portfolio &amp; work <a class="anchor-link" href="#portfolio-work" aria-label="Link to portfolio and work">#</a></h3>
+        <p>The workspace work queue provides bounded live pagination for approvals, signatures, obligations, schedules, and attributable history. Search applies to the selected queue; <strong>Load more work</strong> follows an opaque tenant/query-bound cursor. Rows inserted after page one are excluded from that traversal, but status or sort-field updates can move existing rows between pages. Refresh from page one after acting on work. Portfolio insights aggregate the live workspace estate, including renewals, overdue work, lifecycle/risk distributions, and a separate value bucket for every currency. Notice performs no FX conversion and never shows a cross-currency value total.</p>
+
+        <h3 id="repository-intelligence">Repository intelligence <a class="anchor-link" href="#repository-intelligence" aria-label="Link to repository intelligence">#</a></h3>
+        <ul>
+          <li>Literal search returns registered fragment text pinned to one immutable working-document ID/version/hash, including caller-supplied source-text digest/offsets and fragment digest. Notice does not derive or compare it with canonical working-paper bytes.</li>
+          <li>An externally created field proposal must carry confidence plus citations internally consistent with registered fragments. An authorized human opens the protected working paper, verifies every passage, then records a reason and accepts or rejects it.</li>
+          <li>The provider retains one UUID idempotency key with the exact proposal request. An exact retry recovers the committed proposal; different material under the same key conflicts instead of creating another record.</li>
+          <li>Even acceptance remains <code>governed_executor_required</code> and cannot mutate agreement or custom-field data. It is review evidence, not a legal verdict.</li>
+          <li>Ingestion batches are bounded, idempotent source inventories with hash/deduplication/link status. They do not upload files, perform OCR, migrate a repository, or invoke a broad executor.</li>
+        </ul>
+
+        <h3 id="search">Search two ways <a class="anchor-link" href="#search" aria-label="Link to search">#</a></h3>
+        <div class="card-grid">
+          <article class="card"><span>Global</span><h3>Search everything or jump to…</h3><p>Match counterparty, type, owner, department, CRM label, direction, stage, and tags. Quick actions open template intake, upload, or Approvals when permitted.</p></article>
+          <article class="card"><span>Local</span><h3>Search this register…</h3><p>On Contracts, combine the register query with direction, stage, risk, and sort. Reset clears only that register state.</p></article>
+        </div>
+
+        <h3 id="templates-clauses">Templates and Approved clauses <a class="anchor-link" href="#templates-clauses" aria-label="Link to templates and approved clauses">#</a></h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Capability</th><th>What it does</th><th>Governance point</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Published templates</strong></td><td>Starts the generation wizard from an exact immutable version and digest</td><td>Independent publication makes the version governed; every generated draft still needs human review</td></tr>
+              <tr><td><strong>Ungoverned starters</strong></td><td>Provides useful generation scaffolding</td><td>Clearly labeled; it carries no company approval or policy by itself</td></tr>
+              <tr><td><strong>Approved clauses</strong></td><td>Stores searchable title, category, profile, summary, exact language, and workspace provenance</td><td>A new production workspace begins empty; “Approved” names the library, not approval of evaluation examples</td></tr>
+              <tr><td><strong>Insert into draft</strong></td><td>Legal or admin appends one block to the current browser editor buffer and opens Working draft</td><td>Other permitted roles can read the library; select <strong>Save version</strong> to make inserted text durable</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Governed template generation renders the selected version's self-contained body and declared variables. It rejects nonempty approved-language block IDs until immutable block content/version snapshots and deterministic composition exist. Insert Approved clauses separately, review the working draft, and save a new version.</p>
+        <p>Initial governed-template and playbook creation atomically commits the parent, immutable draft version 1, durable retry receipt, and audit evidence. Parent-only creation is rejected. A different administrator publishes the exact digest. The browser drafts a later immutable revision only when a source version exists; historical empty-parent repair uses the protected version API/operator path.</p>
+        <p>The Contracts page can save the current bounded search, direction, stage, risk, and sort as a named private or shared view. Applying a view reloads its server-backed register from page one. Owners can remove their views; an administrator can remove another member's shared view only with the required reason and confirmation. Saved views are reusable live queries, not frozen report snapshots.</p>
+
+        <h3 id="integrations">Integrations without browser-held secrets <a class="anchor-link" href="#integrations" aria-label="Link to integrations">#</a></h3>
+        <p>The Integrations area explains Salesforce, HubSpot, and signed custom-webhook destinations behind the separately deployed first-party CRM gateway. The main Notice Worker emits canonical events with independent mail and CRM delivery state. The gateway owns durable receipts, retry, replay/collision protection, version fencing, provider adapters, and redacted recovery operations.</p>
+        <ul>
+          <li>Provider credentials and customer field mappings belong in the CRM gateway deployment, never in the browser or main Notice Worker.</li>
+          <li>An admin sees redacted status and can run harmless configured-service diagnostics from Setup &amp; access.</li>
+          <li>CRM is optional. Disable it until the contract workflow is accepted if it is not needed for the pilot.</li>
+          <li>Record-at-a-time CRM resync, tombstone, and legacy-cleanup controls are maintenance tools with strict evidence requirements, not a general bulk console.</li>
+        </ul>
+        <p>For deployment and mapping detail, use the <a href="../../integrations/crm-gateway/README.md">included CRM gateway guide</a>.</p>
+
+      </section>
+
+      <section class="guide-section" id="history" data-title="History and evidence" data-keywords="audit comments event chain hash export signed JSON evidence HMAC retention legal hold workspace export offboarding source history">
+        <p class="section-kicker">10 · History &amp; evidence</p>
+        <h2>Record what happened—and preserve proof outside the app when policy requires it <a class="anchor-link" href="#history" aria-label="Link to history and evidence">#</a></h2>
+        <p class="lead">History &amp; comments combines human context with server-attributed workflow events. Formal exports add integrity evidence, but custody and retention remain customer responsibilities.</p>
+
+        <h3 id="comments">Comments and workflow events <a class="anchor-link" href="#comments" aria-label="Link to comments">#</a></h3>
+        <ul>
+          <li>Members with comment permission can append a comment; actor and time come from the server session.</li>
+          <li>Lifecycle, document, approval, signature, negotiation, export, and records actions append workflow evidence.</li>
+          <li>Agreement events form a gap-checked hash chain. A chain failure blocks evidence export.</li>
+          <li>Use comments for plain-language context, not secrets, temporary portal URLs, or unsupported claims of approval.</li>
+        </ul>
+
+        <h3 id="agreement-export">Agreement evidence export <a class="anchor-link" href="#agreement-export" aria-label="Link to agreement export">#</a></h3>
+        <p>A member with audit-read permission can download a signed JSON evidence envelope containing the contract record, approval history, document-version hashes, signature evidence, verified audit-chain head, and any exact source-attributed agent plan, decision, and execution evidence. Every contributing D1 record is read from one transactional snapshot before signing, and a dangling attribution blocks export. Production export requires the configured independent audit-signing key. Retrieve binary objects separately and verify their size and SHA-256 against the signed snapshot.</p>
+
+        <h3 id="workspace-export">Workspace and offboarding export <a class="anchor-link" href="#workspace-export" aria-label="Link to workspace export">#</a></h3>
+        <p>An admin can download a signed JSON record with sanitized purge and integration history, a referentially closed service-principal/grant/run/plan/decision/execution ledger, and an artifact manifest. Storage keys and errors from purge jobs, secret-backed diagnostic fingerprints/detail, and idempotency-key material are omitted. Document binaries remain separate and must be retrieved through protected routes and verified against declared size and SHA-256.</p>
+
+        <div class="callout warning">
+          <strong>An export download is not automatically an archive.</strong>
+          <p>Store required evidence in protected independent storage, verify its payload hash and HMAC with controlled key access, record the source revision and chain head, and apply the customer's retention and custody policy. Hash chains do not by themselves reveal deletion of the latest event without a previously retained head or export.</p>
+        </div>
+
+        <h3 id="records-controls">Retention and legal hold <a class="anchor-link" href="#records-controls" aria-label="Link to records controls">#</a></h3>
+        <p>Admins see retention and legal-hold controls on Contract details. Every change requires a reason. A legal hold overrides automated deletion, and agreement policy can cascade to linked documents. The customer chooses the schedule, deletion authority, backup expiry, evidence retention, and offboarding process; Notice supplies controlled mechanisms, not legal advice.</p>
+      </section>
+
+      <section class="guide-section" id="errors" data-title="Errors and retries" data-keywords="error retry conflict 409 410 413 422 request ID timeout upload recovery supporting data load scanner outbox dead queue signature stale unsaved">
+        <p class="section-kicker">11 · Errors &amp; retries</p>
+        <h2>Retry the same work safely; do not invent a workaround <a class="anchor-link" href="#errors" aria-label="Link to errors and retries">#</a></h2>
+        <p class="lead">Notice is deliberately conservative around ambiguous writes. A visible failure often means the product is preventing a duplicate, stale overwrite, unsafe file, or unsupported provider assumption.</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>What you see</th><th>What it usually means</th><th>Safe response</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Workspace data could not be loaded</strong></td><td>Core contract data is unavailable</td><td>Select Retry/reload. Do not treat a partial screen as authoritative</td></tr>
+              <tr><td><strong>Your contracts are available; some supporting data could not load</strong></td><td>Optional queues or provider context failed while contracts loaded</td><td>Use <strong>Retry supporting data</strong>; core records remain available</td></tr>
+              <tr><td><strong>Conflict / contract changed</strong></td><td>A version guard detected newer state or the action is no longer eligible</td><td>Refresh the current record, re-read it, and repeat only if still appropriate</td></tr>
+              <tr><td><strong>Saved file or exchange link no longer available</strong></td><td>Old/revoked link or expired/removed staged data</td><td>Do not reuse it; refresh the round or prepare a fresh one</td></tr>
+              <tr><td><strong>File or reviewed text too large</strong></td><td>Request exceeded an enforced size limit</td><td>Use a supported file/size; do not split evidence in a way that changes its meaning</td></tr>
+              <tr><td><strong>Malware or unusable return</strong></td><td>Scanner or content validation rejected it</td><td>Keep it out of the working draft and request a safe replacement</td></tr>
+              <tr><td><strong>Support reference / request ID</strong></td><td>A server error includes a correlation identifier</td><td>Record the ID, time, workspace, contract, action, and non-sensitive context for support</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="retry-patterns">Workflow-specific retry patterns <a class="anchor-link" href="#retry-patterns" aria-label="Link to retry patterns">#</a></h3>
+        <div class="card-grid">
+          <article class="card"><span>Generate / import</span><h3>Retry exact intake</h3><p>The same-tab idempotency record protects against duplicate creation. Do not change frozen fields after a write was attempted.</p></article>
+          <article class="card"><span>Working draft</span><h3>Reload on conflict</h3><p>Reconcile your local text with the newer saved version. Notice will not silently overwrite someone else's save.</p></article>
+          <article class="card"><span>Review round</span><h3>Refresh eligibility</h3><p>A stale, closed, resolved, rotated, or changed round needs current state. Terminal automated delivery failure requires closing and preparing a new round.</p></article>
+          <article class="card"><span>Signature</span><h3>Reconcile, don't recreate</h3><p>A provider may have accepted the packet even when mapping failed. Refresh or reconcile the existing packet.</p></article>
+          <article class="card"><span>Mail / CRM outbox</span><h3>Let durable delivery finish</h3><p>Queued, processing, accepted, and dead are distinct. One successful sink does not mask another failed sink.</p></article>
+          <article class="card"><span>Scanner outage</span><h3>Keep quarantine intact</h3><p>A returned review file has an authorized in-product rescan path that claims one exact source before scanner work; a correlated malicious result remains authoritative even if a clean result races it. Initial-import quarantine requires the documented protected API/operator path; the import dialog has no rescan action. Never replace bytes or hand-edit status.</p></article>
+        </div>
+
+        <div class="callout info">
+          <strong>When escalating, share references—not contract contents.</strong>
+          <p>Capture the visible error, request ID, approximate time, environment, workspace, contract/round/packet identifier, action attempted, and whether the issue is repeatable. Follow the customer's secure support and incident channel for any sensitive content.</p>
+        </div>
+      </section>
+
+      <section class="guide-section" id="implementation" data-title="Admin and setup" data-keywords="administrator implementer production setup handoff Cloudflare Access D1 R2 DocuSeal scanner mail gateway CRM agent principal grant plan SSO readiness deployment customer boundary wealth management">
+        <p class="section-kicker">12 · Admin &amp; setup</p>
+        <h2>The product is off the shelf; production is still customer-owned <a class="anchor-link" href="#implementation" aria-label="Link to admin and setup">#</a></h2>
+        <p class="lead">Most remaining work is repeatable installation, not unfinished CLM engineering. A business should be able to hand this repository to an implementation partner, supply its choices, and receive an accepted deployment without redesigning intake, negotiation, approval, signature, or obligations.</p>
+
+        <h3 id="admin-screen">What an admin can do in Notice <a class="anchor-link" href="#admin-screen" aria-label="Link to admin screen">#</a></h3>
+        <ul>
+          <li>Review technical preflight and customer-configuration gates.</li>
+          <li>See redacted DocuSeal, scanner, delivery, optional inbound email, and optional CRM status.</li>
+          <li>Run harmless live diagnostics for configured services using server-managed secrets. Optional DocuSeal MCP validates <code>initialize</code>, exact HTTP 202 for <code>notifications/initialized</code>, and <code>tools/list</code>, then calls only read-only <code>load_template</code> to cross-check the configured template and ordered roles; mutation tools remain blocked.</li>
+          <li>Invite a verified email, assign one of five roles, enable or disable access, and preserve the last active administrator.</li>
+          <li>Create and inventory legal entities, counterparties, manual groups, typed custom-field definitions, governed templates/workflows/intake forms/playbooks, and direct/group currency-and-amount lane authority.</li>
+          <li>Register or disable service principals, issue or revoke bounded human-sponsored grants, and review the exact governed plan inbox. A sponsor cannot approve or reject their own plan; a different active Admin must decide it. Executable reads repeat exact authority, expiry, agreement-version, and latest-paper checks at claim and completion. See the <a href="../AGENT_API.md">governed agent API</a>.</li>
+          <li>Refresh readiness evidence, manage contract retention/holds, and export workspace/offboarding manifests.</li>
+          <li>Use strict, record-at-a-time CRM reconciliation controls when required.</li>
+        </ul>
+
+        <div class="callout warning">
+          <strong>The admin screen does not create production infrastructure or invent policy.</strong>
+          <p>It cannot create provider accounts, enter deployment secrets, configure the protected identity edge, decide the customer's legal positions or authority matrix, synchronize IdP groups through SCIM, set corporate records policy without an approved decision, or approve go-live. Those choices belong to the customer's implementation and governance process.</p>
+        </div>
+
+        <h3 id="responsibility-map">Responsibility map <a class="anchor-link" href="#responsibility-map" aria-label="Link to responsibility map">#</a></h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Ready in the repository</th><th>Repeatable implementation</th><th>Customer input / approval</th></tr></thead>
+            <tbody>
+              <tr><td>Responsive CLM workflow and server permissions</td><td>Deploy isolated Worker, D1, and R2 resources</td><td>Workspace/legal entity and at least two admins</td></tr>
+              <tr><td>Migrations and exact schema guard</td><td>Apply migrations, configure backup, prove restore</td><td>Data region, RTO/RPO, retention, holds, deletion</td></tr>
+              <tr><td>Cloudflare Access JWT validation and compatibility boundary</td><td>Connect IdP, protect routes, block origin/alternate-host bypass</td><td>MFA, session, conditional access, joiner/mover/leaver policy</td></tr>
+              <tr><td>Governed service principals, scoped grants, action discovery, sponsor/reviewer separation, and exact plan review</td><td>Register the approved workload identity and protect the bounded <code>/api/v1</code> surface</td><td>Distinct active Admin reviewers, resource/action scope, expiry, revocation and monitoring policy</td></tr>
+              <tr><td>Versioned templates/workflows/intake/playbooks, manual groups, custom fields, structured entities/relationships, and direct/group lane authority</td><td>Load, independently publish, and test the approved records and exact currency/minor-unit scopes</td><td>Approved paper, playbook, form questions, lanes/conditions, delegates/groups, entities/counterparties, and value policy</td></tr>
+              <tr><td>Version/hash-pinned registered fragments/citations, extraction proposals with non-mutation, and bounded ingestion inventory</td><td>Connect and assess an approved extractor if selected; require human comparison with protected paper; retain citation/replay evidence</td><td>Provider account, source authorization, human reviewers, and a separate proposal-application policy</td></tr>
+              <tr><td>Hash-bound portal, durable per-round transfer budgets, and signed gateway protocols</td><td>Configure TTL, scanner/mail gateway, narrow machine routes, edge controls, and conformance tests</td><td>Recipient, Word-review, email/domain, privacy, capacity and incident policy</td></tr>
+              <tr><td>DocuSeal 3.2.1 / API contract 1.0.24 adapter and recovery semantics</td><td>Connect account, non-public/non-archived template, token, HMAC-tab webhook secret, entitlement, and diagnostics</td><td>Approved signer roles/order, required signing fields, expiration/2FA, signer authority and delivery policy</td></tr>
+              <tr><td>Included durable CRM gateway and adapters</td><td>Deploy gateway and map approved fields when enabled</td><td>Provider account, credentials, objects, mappings and reconciliation acceptance</td></tr>
+              <tr><td>Native obligation/outbox/retention jobs, audit and exports</td><td>Configure schedules, monitoring, alerts, evidence custody</td><td>SLOs, support, incident, offboarding and go-live approval</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 id="staging-route">Recommended path to staging and production <a class="anchor-link" href="#staging-route" aria-label="Link to staging route">#</a></h3>
+        <ol class="step-list">
+          <li><div><strong>Select an exact reviewed source revision.</strong><p>Retain the matching remote CI, dependency/security evidence, SBOM, approvals, and publication boundary.</p></div></li>
+          <li><div><strong>Use the staging deployment plan.</strong><p>Copy the supplied example manifest to an ignored customer/environment file, validate it, review the redacted plan, and keep secrets out of source.</p></div></li>
+          <li><div><strong>Provision isolated Cloudflare resources.</strong><p>Use explicit custom routes with Workers Paid, private D1/R2, disabled default/preview URLs, and separate staging/production resources.</p></div></li>
+          <li><div><strong>Connect identity and bootstrap two admins.</strong><p>Prefer Cloudflare Access application JWT validation. Keep bootstrap elevation temporary, then disable it and clear the bootstrap email list.</p></div></li>
+          <li><div><strong>Configure enterprise governance.</strong><p>Load legal entities, counterparties, groups, custom fields, templates, workflows, intake forms, playbooks, and exact lane/currency/amount authorities; independently publish and test the immutable versions.</p></div></li>
+          <li><div><strong>Connect mandatory providers.</strong><p>Configure scanner, delivery gateway, DocuSeal, scheduled jobs, and monitoring. Add inbound email or CRM only when deliberately selected and accepted.</p></div></li>
+          <li><div><strong>Run readiness and live diagnostics.</strong><p>The protected report must be green, but it is technical preflight—not legal, security, records, or business acceptance.</p></div></li>
+          <li><div><strong>Complete the synthetic acceptance journey.</strong><p>Prove generate/import, a portal/Word round, reapproval, exact signature, obligation, export, retention/hold, identity isolation, negative paths, backup, and restore.</p></div></li>
+          <li><div><strong>Obtain customer authorization for real data.</strong><p>Record named approval for policies, paper, people, providers, residual risks, and production use.</p></div></li>
+        </ol>
+
+        <h3 id="wealth-profile">A sensible first wealth-management scope <a class="anchor-link" href="#wealth-profile" aria-label="Link to wealth management profile">#</a></h3>
+        <p>The repository's <a href="../WEALTH_MANAGEMENT_PROFILE.md">wealth-management starter profile</a> recommends one legal entity, one workspace, and one centrally managed contracting team. Start with vendor and commercial agreements such as mutual NDAs, software subscriptions, professional/supplier services, order forms, and linked DPAs. Defer client advisory agreements, account-opening/custody/trading instructions, fund subscription documents, regulatory filings, and autonomous legal conclusions until separately designed and approved.</p>
+        <div class="callout info">
+          <strong>Preferred first redline route for that profile</strong>
+          <p>Enable the portal with a customer-approved TTL (the profile suggests 72 hours), keep inbound email capture off, have Legal send the link manually from an approved contracting mailbox, record the bounded message reference, require a clean, policy-verified portal return, independently confirm identity because typed portal email is not mailbox proof, review the exact DOCX in Word, promote reviewed text, and route fresh approvals.</p>
+        </div>
+      </section>
+
+      <section class="guide-section" id="troubleshooting" data-title="Troubleshooting" data-keywords="cannot see button file quarantined portal expired email failed approval blocked signature stale duplicate support setup not ready mobile">
+        <p class="section-kicker">13 · Troubleshooting</p>
+        <h2>Common symptoms and the safest next move <a class="anchor-link" href="#troubleshooting" aria-label="Link to troubleshooting">#</a></h2>
+        <p class="lead">Start with the visible state and current record. Avoid changing database rows, resending old credentials, creating duplicate signature packets, or bypassing quarantine.</p>
+
+        <details>
+          <summary>I cannot see the upload, edit, redline, approval, or admin action.</summary>
+          <div><p>Your server-derived role may not include that permission, the record may be in an ineligible stage, or required durable/provider state may not be ready. Confirm your role, open the exact record, and ask an admin for the least-privilege access or owner action needed. Browser changes cannot grant authority.</p></div>
+        </details>
+
+        <details>
+          <summary>The imported or returned file is quarantined.</summary>
+          <div><p>Do not download or promote it. A scanner outage or inconclusive result must remain isolated. A returned review file exposes the authorized in-product rescan action after scanner recovery. That action serializes one exact source under a lease; a correlated malicious verdict dominates a concurrently clean outcome. Initial-import quarantine requires the documented protected API/operator path; there is no rescan action in the import dialog. A clean result advances the same object and lineage, while a malicious result remains rejected and follows guarded cleanup.</p></div>
+        </details>
+        <details>
+          <summary>The temporary portal link was lost, expired, or may have leaked.</summary>
+          <div><p>Do not search logs, CRM, tickets, or old emails for plaintext. If the round is active and delivery state permits it, rotate the link; the old one stops working, but the round's upload/download budgets do not reset. If automated delivery is still queued/processing, wait. If the round is closed/resolved or delivery is terminal-dead, close as needed and prepare a fresh round from the current immutable paper.</p></div>
+        </details>
+        <details>
+          <summary>The portal says upload busy or transfer limit reached.</summary>
+          <div><p><strong>Upload busy</strong> means another request holds the round's one upload/scan lease; wait at least the returned five-second interval and retry once. <strong>Transfer limit reached</strong> means a durable per-round count or byte budget is exhausted. Rotation cannot reset it: ask the sender to close or resolve the old round and prepare a new one.</p></div>
+        </details>
+        <details>
+          <summary>The counterparty says they replied by email, but Notice shows no file.</summary>
+          <div><p>Inbound email capture is optional. If the round has no generated reply alias, the intended return path is the portal. If capture is enabled, inspect provider/gateway delivery, exact alias, authentication, replay/collision and no-attachment evidence without forwarding the raw contract through an unapproved channel.</p></div>
+        </details>
+        <details>
+          <summary>The gateway delivery is queued, processing, or dead.</summary>
+          <div><p>Queued/processing is not final; wait for the scheduled outbox to record acceptance or terminal failure. Gateway acceptance does not prove counterparty receipt. A terminal-dead negotiation event has scrubbed the plaintext portal URL from that durable delivery payload, so the event cannot be resent; the round token itself is not single-use. Close the round, confirm recipient details, and prepare a new round.</p></div>
+        </details>
+        <details>
+          <summary>Approval says Required again after I promoted a return.</summary>
+          <div><p>That is expected. Promotion creates a new immutable working version, making earlier approval evidence stale and clearing signature readiness. Confirm the new version/hash and explicitly route the required lanes again.</p></div>
+        </details>
+        <details>
+          <summary>I approved a lane, but the contract is still Pending.</summary>
+          <div><p>Another required current lane may still be pending. The aggregate becomes Approved only after every lane in the stored governed-workflow snapshot—or the compatibility required set—is approved by distinct attributable deciders. Under the compatibility policy, High risk, a waiver, USD value above 100,000, or any material non-USD value requires both Legal and Finance.</p></div>
+        </details>
+        <details>
+          <summary>Signature creation failed or the packet looks stale.</summary>
+          <div><p>Do not create a second packet. Reload Signatures and use Reconcile provider packet or Refresh provider state on the existing record. If a fresh reconciliation is already processing, retry later. Admin recovery actions are intentionally narrow and require fresh provider checks.</p></div>
+        </details>
+        <details>
+          <summary>I downloaded a draft but it does not include my edit.</summary>
+          <div><p>Draft download exports only the exact durable saved version and is disabled during normal unsaved editing. Save a new version first, confirm the displayed version/hash, then download that version.</p></div>
+        </details>
+        <details>
+          <summary>Setup says the workspace is not ready for production.</summary>
+          <div><p>Open the redacted preflight and provider diagnostics as an admin. A missing customer decision, provider endpoint/credential, exact supported provider slug, storage/identity configuration, or acceptance attestation keeps the deployment fail-closed. Follow the linked remediation in Production setup; never mark a gate true without retained evidence.</p></div>
+        </details>
+        <details>
+          <summary>The mobile menu or contract layout feels different.</summary>
+          <div><p>The same lifecycle and counts remain available. Use the menu button, close it with the X, scrim, or Escape, and horizontally scroll the stage rail when needed. Contract rows stack into cards while preserving separate checkbox, record, action, and queue targets.</p></div>
+        </details>
+
+      </section>
+
+      <section class="guide-section" id="quick-reference" data-title="Quick reference" data-keywords="checklist cheat sheet before send before promote before approve before sign first contract steps print">
+        <p class="section-kicker">14 · Quick reference</p>
+        <h2>The one-page operating checklist <a class="anchor-link" href="#quick-reference" aria-label="Link to quick reference">#</a></h2>
+        <p class="lead">Print this section or keep it beside the first few agreements.</p>
+
+        <h3 id="before-intake">Before intake <a class="anchor-link" href="#before-intake" aria-label="Link to before intake">#</a></h3>
+        <ul class="checklist">
+          <li>Confirm this is the correct production workspace and that real-data use is approved.</li>
+          <li>Choose a published request form, an exact governed template version, a clearly marked ungoverned starter, or upload for existing counterparty/company paper.</li>
+          <li>Use only supported file types and no file larger than 20 MiB.</li>
+          <li>Confirm structured counterparty/entity, direction, type, owner, department, dates, risk, three-letter currency, minor-unit amount, and selected workflow.</li>
+          <li>Save and note the exact working version and SHA-256.</li>
+        </ul>
+
+        <h3 id="before-send">Before counterparty exchange <a class="anchor-link" href="#before-send" aria-label="Link to before exchange">#</a></h3>
+        <ul class="checklist">
+          <li>Verify the current saved paper is complete and no old signature packet or active round conflicts.</li>
+          <li>Confirm counterparty name and email using the approved out-of-band process.</li>
+          <li>Prepare one round and compare the displayed base version/hash to the intended paper.</li>
+          <li>Treat the temporary portal URL as a secret; copy it once to the approved delivery path.</li>
+          <li>Use manual delivery unless automated negotiation mail has separate acceptance evidence.</li>
+          <li>Record only a bounded message/provider reference; never claim it proves recipient receipt.</li>
+        </ul>
+
+        <h3 id="before-promote">Before promoting a redline <a class="anchor-link" href="#before-promote" aria-label="Link to before promotion">#</a></h3>
+        <ul class="checklist">
+          <li>Confirm the submission belongs to the latest active round and has a clean, <code>ready</code>, policy-eligible state.</li>
+          <li>Download the exact returned file from Notice and check its full SHA-256.</li>
+          <li>Review tracked changes, comments, formatting, schedules, headers/footers, fields, and hidden content in Word.</li>
+          <li>Enter complete reviewed text for exactly this one attachment—never combine sources.</li>
+          <li>Record who reviewed, how binary features were checked, and why the text is intended.</li>
+          <li>Use the line comparison as an aid only, then explicitly promote or reject.</li>
+          <li>After promotion, confirm the new version/hash and route fresh approvals.</li>
+        </ul>
+
+        <h3 id="before-sign">Before signature <a class="anchor-link" href="#before-sign" aria-label="Link to before signature">#</a></h3>
+        <ul class="checklist">
+          <li>Confirm all required current lanes approved the exact current version and material basis.</li>
+          <li>Confirm delegated authority outside the product; workspace permission is not signing authority.</li>
+          <li>Confirm the DocuSeal template is non-public/non-archived and each exact ordered role has a required signing field; enter a name and unique normalized email for every role, while names may repeat.</li>
+          <li>Create one secure packet only; reconcile the existing packet if mapping or status is uncertain.</li>
+          <li>After completion, verify signed artifact evidence and that stale paper did not activate the contract.</li>
+          <li>Create confirmed, eligible-owner renewal, notice, reporting, and other schedules from the signed agreement; verify recurrence, reminders, and completion evidence.</li>
+        </ul>
+
+        <button class="print-button" type="button" data-print style="color:#fff;background:#142c20">Print this guide</button>
+      </section>
+
+      <section class="guide-section" id="glossary" data-title="Glossary and documents" data-keywords="definitions workspace role approval lane working version source document round portal token outbox readiness audit docs links">
+        <p class="section-kicker">15 · Glossary &amp; deeper docs</p>
+        <h2>Shared language for a clean handoff <a class="anchor-link" href="#glossary" aria-label="Link to glossary">#</a></h2>
+        <p class="lead">These terms help business users, Legal, implementers, security, records, and operations discuss the same thing.</p>
+
+        <dl class="glossary">
+          <div><dt>Agreement / contract record</dt><dd>The governed Notice record connecting paper, metadata, approvals, signature, obligations, and evidence.</dd></div>
+          <div><dt>Working version</dt><dd>An immutable saved text or Markdown version in private storage, identified by version number and SHA-256.</dd></div>
+          <div><dt>Source document</dt><dd>An uploaded original or returned binary retained with filename, type, size, hash, scan state, and lineage.</dd></div>
+          <div><dt>Review round</dt><dd>One hash-bound outbound copy, recipient context, scoped return path, submissions, human decisions, and resolution.</dd></div>
+          <div><dt>Portal token</dt><dd>An expiring bearer credential for one scoped external round. The durable round stores its hash, not reusable plaintext.</dd></div>
+          <div><dt>Promotion</dt><dd>The explicit act of turning human-reviewed text tied to one clean returned source into the next immutable working version.</dd></div>
+          <div><dt>Workspace role</dt><dd>One of five lowercase server permission sets: admin, legal, requester, approver, or viewer.</dd></div>
+          <div><dt>Approval lane</dt><dd>A capitalized request label such as Legal or Finance. It is not the same as a workspace role.</dd></div>
+          <div><dt>Material basis</dt><dd>The current paper and material agreement data to which approval and signature eligibility are bound.</dd></div>
+          <div><dt>Outbox</dt><dd>Durable asynchronous delivery work with independent mail and CRM ledgers, retries, acceptance, and dead state.</dd></div>
+          <div><dt>Readiness</dt><dd>A redacted technical preflight of repository capabilities and required customer configuration. It is not business acceptance.</dd></div>
+          <div><dt>Audit evidence</dt><dd>Server-attributed events, hash-chain state, record data, document hashes, approval/signature evidence, and signed export envelopes.</dd></div>
+        </dl>
+
+        <h3 id="documents">Authoritative documents <a class="anchor-link" href="#documents" aria-label="Link to authoritative documents">#</a></h3>
+        <div class="doc-map">
+          <a href="../USER_GUIDE.md"><b>User guide</b><span>Detailed behavior for every signed-in product area</span></a>
+          <a href="../WEALTH_MANAGEMENT_PROFILE.md"><b>Wealth-management profile</b><span>Opinionated private-wealth MVP scope, roles, approval shape, and Word procedure</span></a>
+          <a href="../IMPLEMENTATION_HANDOFF.md"><b>Implementation handoff</b><span>Business-facing responsibility split, workbook, acceptance, and handoff package</span></a>
+          <a href="../DEPLOYMENT_QUICKSTART.md"><b>15-minute staging deployment</b><span>Shortest manifest, plan, secrets, install, and staging-acceptance route</span></a>
+          <a href="../PRODUCTION_SETUP.md"><b>Production setup</b><span>Identity, storage, providers, records, monitoring, and go-live detail</span></a>
+          <a href="../DEPLOYMENT.md"><b>Deployment</b><span>Release sequencing, migrations, promotion, upgrades, rollback, and evidence</span></a>
+          <a href="../OPERATIONS.md"><b>Operations</b><span>Monitoring, jobs, incidents, backup/restore, access, retention, and offboarding</span></a>
+          <a href="../SSO.md"><b>Corporate SSO</b><span>Cloudflare Access and compatibility identity boundary</span></a>
+          <a href="../GATEWAY_CONFORMANCE.md"><b>Gateway conformance</b><span>Scanner, mail, inbound-email, and CRM signed protocols</span></a>
+          <a href="../DOCUSEAL.md"><b>DocuSeal integration</b><span>Exact release/API pins, REST and read-only MCP diagnostics, webhooks, recovery, and staging acceptance</span></a>
+          <a href="../CUSTOMER_HOSTED_OCR.md"><b>Customer-hosted OCR</b><span>Deployment-selected model/profile, signed gateway contract, hosting boundary, readiness, and operations</span></a>
+          <a href="../../integrations/crm-gateway/README.md"><b>CRM gateway</b><span>Included HubSpot, Salesforce, and custom-adapter deployment</span></a>
+          <a href="../ARCHITECTURE.md"><b>Architecture</b><span>Trust boundaries, persistence, mutation flow, and lifecycle design</span></a>
+          <a href="../API.md"><b>Application and governed agent APIs</b><span>Authentication classes, routes, response behavior, and mutation examples</span></a>
+          <a href="../../SECURITY.md"><b>Security policy</b><span>Supported boundary, vulnerability reporting, controls, and release expectations</span></a>
+          <a href="../THREAT_MODEL.md"><b>Threat model</b><span>Assets, actors, counterparty exchange, identity, audit, and residual properties</span></a>
+          <a href="../PUBLIC_RELEASE.md"><b>Public release and adopter handoff</b><span>Disclosure-reviewed publication and release-evidence gates</span></a>
+          <a href="../../README.md"><b>Repository overview</b><span>Product scope, local evaluation, validation, deployment shape, and boundaries</span></a>
+        </div>
+
+        <div class="callout">
+          <strong>If this page and a source document disagree, follow the current source document.</strong>
+          <p>This guide is a practical map of the current repository. The application code, server rules, current README, and linked authoritative Markdown documents define the shipped behavior. Customer policy and the accepted deployment record define what the adopting business is authorized to do.</p>
+        </div>
+        <a class="back-top" href="#top">Back to top ↑</a>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <p><strong>Notice CLM practical how-to guide.</strong> Product documentation—not legal, regulatory, security, records, or delegated-authority advice.</p>
+      <p><a href="../IMPLEMENTATION_HANDOFF.md">Implementation handoff</a> · <a href="../OPERATIONS.md">Operations</a> · <a href="../../SECURITY.md">Security</a></p>
+    </div>
+  </footer>
+
+  <noscript>
+    <p style="margin:0;padding:12px 20px;color:#17231d;background:#eff8cf;text-align:center">JavaScript is off. The complete guide remains available; only in-page search and the Print button are inactive. Use your browser's print command.</p>
+  </noscript>
+
+  <script>
+    (function () {
+      "use strict";
+      var input = document.getElementById("guide-search-input");
+      var clear = document.getElementById("clear-search");
+      var status = document.getElementById("search-status");
+      var empty = document.getElementById("no-results");
+      var sections = Array.prototype.slice.call(document.querySelectorAll(".guide-section"));
+
+      function normalize(value) {
+        return value.toLocaleLowerCase().normalize("NFKD").replace(/[\u0300-\u036f]/g, "").trim();
+      }
+
+      function filterGuide() {
+        var query = normalize(input.value);
+        var terms = query.split(/\s+/).filter(Boolean);
+        var shown = 0;
+        sections.forEach(function (section) {
+          var source = normalize((section.dataset.title || "") + " " + (section.dataset.keywords || "") + " " + section.textContent);
+          var match = terms.length === 0 || terms.every(function (term) { return source.indexOf(term) !== -1; });
+          section.hidden = !match;
+          if (match) shown += 1;
+        });
+        empty.classList.toggle("visible", shown === 0);
+        status.textContent = terms.length === 0
+          ? "All " + sections.length + " sections shown"
+          : shown + " of " + sections.length + " sections shown";
+      }
+
+      input.addEventListener("input", filterGuide);
+      clear.addEventListener("click", function () {
+        input.value = "";
+        filterGuide();
+        input.focus();
+      });
+      document.querySelectorAll("[data-print]").forEach(function (button) {
+        button.addEventListener("click", function () { window.print(); });
+      });
+      document.querySelectorAll(".toc nav a").forEach(function (link) {
+        link.addEventListener("click", function () {
+          if (!input.value) return;
+          input.value = "";
+          filterGuide();
+        });
+      });
+    }());
+  </script>
+</body>
+</html>

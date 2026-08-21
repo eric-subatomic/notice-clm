@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "1.0",
+  "accountId": "replace-with-32-character-cloudflare-account-id",
+  "sourceRevision": "replace-with-exact-git-commit-revision",
+  "environment": "staging",
+  "workerName": "replace-with-notice-crm-gateway-staging",
+  "customDomain": "crm-gateway-staging.customer.invalid",
+  "provider": {
+    "type": "hubspot",
+    "mappingVersion": "v1",
+    "fieldMapping": {},
+    "apiBaseUrl": "https://api.hubapi.com",
+    "objectType": "replace-with-hubspot-object-type",
+    "idProperty": "replace_with_unique_id_property"
+  },
+  "schedules": {
+    "recovery": "*/5 * * * *"
+  },
+  "retention": {
+    "terminalPayloadDays": 90,
+    "terminalMetadataDays": 365
+  }
+}

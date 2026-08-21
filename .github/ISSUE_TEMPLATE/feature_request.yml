@@ -1,0 +1,41 @@
+name: Feature request
+description: Propose a focused product, operations, documentation, or contributor improvement.
+title: "[Feature]: "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Describe the user or operator problem before proposing implementation details. Use synthetic examples only. Do not include customer data, confidential contract language, credentials, or private provider configuration.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I searched existing issues, pull requests, and the documented product boundaries.
+          required: true
+        - label: This request contains no sensitive or customer-identifying information.
+          required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: Who has the problem, and what task or outcome is blocked?
+    validations:
+      required: true
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: Describe observable behavior and how a user would know it works.
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Security, records, and compatibility considerations
+      description: Note identity, tenant, approval, exact-paper, provider, retention, accessibility, migration, or API compatibility effects.
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Include current workarounds or smaller options, if any.

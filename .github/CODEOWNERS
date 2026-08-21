@@ -1,0 +1,8 @@
+# Current project stewardship. CODEOWNERS requests review; branch rules decide
+# whether that review is required.
+* @ericwithac
+
+/.github/ @ericwithac
+/SECURITY.md @ericwithac
+/db/ @ericwithac
+/drizzle/ @ericwithac

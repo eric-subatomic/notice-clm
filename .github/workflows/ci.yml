@@ -1,0 +1,133 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  engine-floor:
+    name: Node 22.13 engine-floor compatibility
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Use the minimum supported Node.js release
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 22.13.0
+          cache: npm
+
+      - name: Use the repository npm release
+        run: npm install --global npm@11.3.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify the supported runtime floor
+        run: npm test
+
+  windows-pinned-wrangler-input-boundary:
+    name: Windows pinned Wrangler input boundary
+    runs-on: windows-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Use the security-patched Node.js 22 LTS release
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 22.23.2
+          cache: npm
+
+      - name: Use the repository npm release
+        run: npm install --global npm@11.3.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify the pinned Wrangler input boundary
+        run: node --import tsx --test tests/release-input-pinning.test.ts
+
+  validate:
+    name: Full repository validation
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+
+      - name: Use the security-patched Node.js 22 LTS release
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 22.23.2
+          cache: npm
+
+      - name: Use the repository npm release
+        run: npm install --global npm@11.3.0
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run unit, type, lint, build, rendered, and API checks
+        run: npm test
+
+      - name: Install the Playwright Chromium runtime
+        run: npx playwright install --with-deps chromium
+
+      - name: Run real-browser lifecycle and accessibility checks
+        run: npm run test:e2e
+
+      - name: Run signed production-browser identity and mutation evidence
+        run: npm run test:e2e:production
+
+      - name: Retain the Playwright report
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: notice-playwright-${{ github.sha }}
+          path: |
+            work/playwright/report
+            work/playwright/production-report
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Reject production and high-severity dependency advisories
+        run: npm run audit:production && npm run audit:all
+
+      - name: Verify package registry signatures and attestations
+        run: npm run audit:signatures
+
+      - name: Generate a CycloneDX dependency inventory
+        run: npm run --silent sbom -- --revision "${{ github.sha }}" --require-clean --output notice-sbom.cdx.json
+
+      - name: Validate the revision-bound dependency inventory
+        run: npm run --silent sbom:validate -- --input notice-sbom.cdx.json --revision "${{ github.sha }}" --require-clean
+
+      - name: Retain the dependency inventory with the revision
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        with:
+          name: notice-sbom-${{ github.sha }}
+          path: notice-sbom.cdx.json
+          if-no-files-found: error
+          retention-days: 30

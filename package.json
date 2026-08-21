@@ -1,0 +1,106 @@
+{
+  "name": "notice-clm",
+  "version": "0.1.0",
+  "description": "A general-purpose contract lifecycle management workspace for generating, reviewing, approving, signing, and operating agreements.",
+  "private": true,
+  "packageManager": "npm@11.3.0",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ericwithac/notice-clm.git"
+  },
+  "homepage": "https://github.com/ericwithac/notice-clm#readme",
+  "bugs": {
+    "url": "https://github.com/ericwithac/notice-clm/issues"
+  },
+  "keywords": [
+    "clm",
+    "contract-lifecycle-management",
+    "contracts",
+    "legal-operations",
+    "agreement-management",
+    "document-automation"
+  ],
+  "engines": {
+    "node": ">=22.13.0 <23",
+    "npm": ">=11.3.0 <12"
+  },
+  "scripts": {
+    "dev": "node scripts/run-with-env.mjs WRANGLER_LOG_PATH=.wrangler/wrangler.log -- vinext dev",
+    "dev:evaluation": "node scripts/run-with-env.mjs NOTICE_LOCAL_EVALUATION=true WRANGLER_LOG_PATH=.wrangler/wrangler.log -- vinext dev",
+    "dev:production-evidence": "node scripts/run-with-env.mjs NOTICE_LOCAL_PRODUCTION_EVIDENCE=true WRANGLER_LOG_PATH=.wrangler/wrangler.log -- vinext dev",
+    "build": "node scripts/run-with-env.mjs WRANGLER_LOG_PATH=.wrangler/wrangler.log -- vinext build",
+    "start": "node scripts/run-with-env.mjs WRANGLER_LOG_PATH=.wrangler/wrangler.log -- vinext start",
+    "deploy": "node --import tsx scripts/deploy-release.mjs first-install",
+    "deploy:resume": "node --import tsx scripts/deploy-release.mjs first-install-resume",
+    "deploy:promote": "node --import tsx scripts/deploy-release.mjs configuration-promotion",
+    "test": "npm run test:unit && npm run test:migrations:d1 && npm run typecheck && npm run lint && npm run test:docs && npm run test:platform && npm run test:deploy && node --test tests/rendered-html.test.mjs && npm run test:api",
+    "test:unit": "node --import tsx --test tests/*.test.ts",
+    "test:api": "npm run test:api:evaluation && npm run test:api:production",
+    "test:api:evaluation": "node tests/local-api-smoke.mjs",
+    "test:api:production": "node tests/production-api-evidence.mjs",
+    "test:e2e": "playwright test --project=chromium",
+    "test:e2e:production": "playwright test --config=playwright.production.config.ts --project=production-chromium",
+    "test:deploy": "node --import tsx tests/rendered-deploy.test.mjs",
+    "test:docs": "node --test tests/documentation.test.mjs",
+    "test:migrations:d1": "node scripts/d1-migration-smoke.mjs",
+    "test:platform": "vinext check",
+    "typecheck": "tsc --noEmit --pretty false",
+    "lint": "eslint . --ignore-pattern dist --ignore-pattern .next",
+    "db:generate": "drizzle-kit generate",
+    "deployment:plan": "node --import tsx scripts/deployment-kit.mjs plan",
+    "deployment:render": "node --import tsx scripts/deployment-kit.mjs render",
+    "crm:gateway:deployment:dry-run": "node --import tsx scripts/crm-gateway-kit.mjs dry-run",
+    "crm:gateway:deployment:plan": "node --import tsx scripts/crm-gateway-kit.mjs plan",
+    "crm:gateway:deployment:render": "node --import tsx scripts/crm-gateway-kit.mjs render",
+    "crm:gateway:deploy": "node --import tsx scripts/deploy-crm-gateway-release.mjs first-install",
+    "crm:gateway:resume": "node --import tsx scripts/deploy-crm-gateway-release.mjs first-install-resume",
+    "crm:gateway:promote": "node --import tsx scripts/deploy-crm-gateway-release.mjs configuration-promotion",
+    "readiness": "node --import tsx scripts/readiness-check.mjs",
+    "sbom": "node scripts/sbom.mjs generate",
+    "sbom:validate": "node scripts/sbom.mjs validate",
+    "audit:production": "npm audit --omit=dev --audit-level=low",
+    "audit:all": "npm audit --audit-level=high",
+    "audit:signatures": "npm audit signatures"
+  },
+  "dependencies": {
+    "drizzle-orm": "0.45.2",
+    "jose": "6.2.9",
+    "mammoth": "^1.12.1",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "unpdf": "^1.8.1",
+    "zod": "4.4.3"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.13.0",
+    "@cloudflare/vite-plugin": "1.52.1",
+    "@cloudflare/workers-types": "5.20260820.1",
+    "@playwright/test": "1.62.1",
+    "@types/node": "22.19.19",
+    "@types/react": "19.2.18",
+    "@types/react-dom": "19.2.4",
+    "@vitejs/plugin-react": "6.0.5",
+    "@vitejs/plugin-rsc": "0.5.34",
+    "drizzle-kit": "0.31.10",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.3.1",
+    "next": "16.3.1",
+    "react-server-dom-webpack": "19.2.8",
+    "tsx": "4.23.12",
+    "typescript": "6.0.3",
+    "vinext": "1.0.0-beta.7",
+    "vite": "8.2.1",
+    "wrangler": "4.123.0"
+  },
+  "overrides": {
+    "@esbuild-kit/core-utils": {
+      "esbuild": "0.25.12"
+    },
+    "nanoid": "3.3.18",
+    "postcss": "8.5.25",
+    "sharp": "0.35.3",
+    "undici": "7.29.0"
+  },
+  "type": "module"
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "notice-crm-gateway",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-05-22",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": {
+    "enabled": true
+  },
+  "d1_databases": [
+    {
+      "binding": "CRM_DB",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "triggers": {
+    "crons": ["*/5 * * * *"]
+  },
+  "secrets": {
+    "required": [
+      "NOTICE_INGRESS_SECRET",
+      "NOTICE_OPERATIONS_SECRET"
+    ]
+  },
+  "vars": {
+    "NOTICE_CRM_TERMINAL_PAYLOAD_RETENTION_DAYS": "90",
+    "NOTICE_CRM_TERMINAL_METADATA_RETENTION_DAYS": "365"
+  }
+}

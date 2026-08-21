@@ -1,0 +1,97 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Amsterdam
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Europe/Amsterdam
+    open-pull-requests-limit: 10
+    versioning-strategy: increase-if-necessary
+    groups:
+      next-compatibility-lint:
+        applies-to: version-updates
+        patterns:
+          - eslint-config-next
+          - next
+        update-types:
+          - minor
+          - patch
+      react-runtime:
+        applies-to: version-updates
+        patterns:
+          - react
+          - react-dom
+          - react-server-dom-webpack
+        update-types:
+          - minor
+          - patch
+      drizzle-toolchain:
+        applies-to: version-updates
+        patterns:
+          - drizzle-kit
+          - drizzle-orm
+        update-types:
+          - minor
+          - patch
+      cloudflare-toolchain:
+        applies-to: version-updates
+        patterns:
+          - "@cloudflare/vite-plugin"
+          - "@cloudflare/workers-types"
+          - wrangler
+        update-types:
+          - minor
+          - patch
+      vite-toolchain:
+        applies-to: version-updates
+        patterns:
+          - vite
+          - vinext
+          - "@vitejs/plugin-react"
+          - "@vitejs/plugin-rsc"
+        update-types:
+          - minor
+          - patch
+      compatible-production-dependencies:
+        applies-to: version-updates
+        dependency-type: production
+        patterns:
+          - "*"
+        exclude-patterns:
+          - drizzle-orm
+          - react
+          - react-dom
+        update-types:
+          - minor
+          - patch
+      compatible-development-dependencies:
+        applies-to: version-updates
+        dependency-type: development
+        patterns:
+          - "*"
+        exclude-patterns:
+          - "@cloudflare/vite-plugin"
+          - "@cloudflare/workers-types"
+          - "@vitejs/plugin-react"
+          - "@vitejs/plugin-rsc"
+          - drizzle-kit
+          - eslint-config-next
+          - next
+          - react-server-dom-webpack
+          - vinext
+          - vite
+          - wrangler
+        update-types:
+          - minor
+          - patch
