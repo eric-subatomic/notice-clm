@@ -74,8 +74,8 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "4.13.0",
-    "@cloudflare/vite-plugin": "1.52.1",
-    "@cloudflare/workers-types": "5.20260820.1",
+    "@cloudflare/vite-plugin": "1.53.1",
+    "@cloudflare/workers-types": "5.20260821.1",
     "@playwright/test": "1.62.1",
     "@types/node": "22.19.19",
     "@types/react": "19.2.18",
@@ -91,7 +91,7 @@
     "typescript": "6.0.3",
     "vinext": "1.0.0-beta.7",
     "vite": "8.2.1",
-    "wrangler": "4.123.0"
+    "wrangler": "4.125.0"
   },
   "overrides": {
     "@esbuild-kit/core-utils": {
