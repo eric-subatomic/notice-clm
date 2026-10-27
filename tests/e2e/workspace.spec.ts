@@ -785,7 +785,7 @@ test("an administrator can register a principal and issue an exact-resource read
   await principalForm.getByRole("textbox", { name: "Verified common name" }).fill(commonName);
   await principalForm.getByRole("button", { name: "Register principal" }).click();
 
-  await expect(page.getByRole("status")).toContainText("Service principal registered without storing a bearer secret");
+  await expect(page.getByRole("status").filter({ hasText: "Service principal registered without storing a bearer secret" })).toBeVisible();
   const principalRow = governance.locator(".agent-admin-list article").filter({ hasText: principalName });
   await expect(principalRow).toContainText(commonName);
   await expect(principalRow.locator(".agent-status")).toHaveText("active");
@@ -797,7 +797,7 @@ test("an administrator can register a principal and issue an exact-resource read
   await grantForm.getByLabel("Expires after").selectOption("1");
   await grantForm.getByRole("button", { name: "Create grant" }).click();
 
-  await expect(page.getByRole("status")).toContainText("Time-limited exact-resource agent grant created");
+  await expect(page.getByRole("status").filter({ hasText: "Time-limited exact-resource agent grant created" })).toBeVisible();
   const grantRow = governance.locator(".agent-admin-list.grants article").filter({ hasText: principalName }).first();
   await expect(grantRow).toContainText("agreement.read");
   await expect(grantRow).toContainText("agreement:1");
@@ -1169,6 +1169,8 @@ test("completed signed evidence cannot activate without a review reason and conf
 });
 
 test("a human can create, pause, and evidence a recurring obligation through exact gates", async ({ page }) => {
+  // Keep the fixed calendar fixtures in the future without pausing UI timers.
+  await page.clock.setFixedTime(new Date("2026-08-19T12:00:00.000Z"));
   type ObligationMutationFixture =
     | { entity: "obligation"; action: "create"; record: { agreementId: number; title: string; source: string; dueDate: string; ownerUserId: string; recurrence: { unit: string; interval: number; timezone: string; endDate?: string; reminderLeadDays: number[] }; confirmed: true } }
     | { entity: "obligation"; action: "reassign"; record: { scheduleId: string; version: number; newOwnerUserId: string; reason: string; includeOpenOccurrences: true; confirmed: true } }

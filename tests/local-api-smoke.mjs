@@ -15,7 +15,7 @@ let evaluationIdentitySwitch = null;
 
 const server = spawn(
   "npm",
-  ["run", "dev:evaluation", "--", "--hostname", "localhost", "--port", String(configuredPort)],
+  ["run", "dev:evaluation", "--", "--host", "localhost", "--port", String(configuredPort), "--strictPort"],
   {
     cwd: projectRoot,
     detached: process.platform !== "win32",

@@ -910,15 +910,15 @@ test("the release runtime and lock retain the exact local Wrangler CLI pin", asy
     readFile(join(repositoryRoot, "node_modules/vinext/package.json"), "utf8").then(JSON.parse),
   ]);
   const cliPath = fileURLToPath(import.meta.resolve("wrangler"));
-  assert.equal(manifest.devDependencies.wrangler, "4.123.0");
-  assert.equal(lock.packages[""].devDependencies.wrangler, "4.123.0");
-  assert.equal(lock.packages["node_modules/wrangler"].version, "4.123.0");
-  assert.equal(installed.version, "4.123.0");
+  assert.equal(manifest.devDependencies.wrangler, "4.152.0");
+  assert.equal(lock.packages[""].devDependencies.wrangler, "4.152.0");
+  assert.equal(lock.packages["node_modules/wrangler"].version, "4.152.0");
+  assert.equal(installed.version, "4.152.0");
   assert.equal(cliPath, join(repositoryRoot, "node_modules/wrangler/wrangler-dist/cli.js"));
-  assert.equal(manifest.devDependencies.vinext, "1.0.0-beta.7");
-  assert.equal(lock.packages[""].devDependencies.vinext, "1.0.0-beta.7");
-  assert.equal(lock.packages["node_modules/vinext"].version, "1.0.0-beta.7");
-  assert.equal(installedVinext.version, "1.0.0-beta.7");
+  assert.equal(manifest.devDependencies.vinext, "1.3.1");
+  assert.equal(lock.packages[""].devDependencies.vinext, "1.3.1");
+  assert.equal(lock.packages["node_modules/vinext"].version, "1.3.1");
+  assert.equal(installedVinext.version, "1.3.1");
   assert.equal(installedVinext.bin.vinext, "dist/cli.js");
 });
 

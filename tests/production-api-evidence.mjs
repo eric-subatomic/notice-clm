@@ -2546,7 +2546,7 @@ function startNoticeServer(script, port, noticeEnvironment) {
   );
   const child = spawn(
     "npm",
-    ["run", script, "--", "--hostname", "localhost", "--port", String(port)],
+    ["run", script, "--", "--host", "localhost", "--port", String(port), "--strictPort"],
     {
       cwd: projectRoot,
       detached: process.platform !== "win32",

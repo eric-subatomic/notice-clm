@@ -9,15 +9,15 @@ const launchers = [
   ["tests/production-api-evidence.mjs", "localhost"],
 ] as const;
 
-test("vinext test launchers use its supported hostname option", async () => {
+test("vinext test launchers use supported loopback and strict-port options", async () => {
   for (const [file, expectedHost] of launchers) {
     const source = await readFile(new URL(`../${file}`, import.meta.url), "utf8");
     const tokens = source.split(/[\s"'`,\[\]]+/).filter(Boolean);
     assert.ok(
-      tokens.some((token, index) => token === "--hostname" && tokens[index + 1] === expectedHost),
+      tokens.some((token, index) => token === "--host" && tokens[index + 1] === expectedHost),
       `${file} must bind the expected hostname ${expectedHost}`,
     );
-    assert.equal(tokens.includes("--host"), false, `${file} must not use Vite's ignored --host option`);
-    assert.equal(tokens.includes("--strictPort"), false, `${file} must not use Vite's ignored --strictPort option`);
+    assert.equal(tokens.includes("--hostname"), false, `${file} must not use the retired --hostname option`);
+    assert.equal(tokens.includes("--strictPort"), true, `${file} must fail if its expected port is occupied`);
   }
 });
