@@ -64,7 +64,7 @@
     "audit:signatures": "npm audit signatures"
   },
   "dependencies": {
-    "drizzle-orm": "0.45.2",
+    "drizzle-orm": "0.45.4",
     "jose": "6.2.13",
     "mammoth": "^1.12.1",
     "react": "19.3.1",
@@ -82,7 +82,7 @@
     "@types/react-dom": "19.2.4",
     "@vitejs/plugin-react": "6.1.2",
     "@vitejs/plugin-rsc": "0.5.38",
-    "drizzle-kit": "0.31.10",
+    "drizzle-kit": "0.31.11",
     "eslint": "9.39.5",
     "eslint-config-next": "16.4.3",
     "next": "16.4.3",
