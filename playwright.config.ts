@@ -27,7 +27,7 @@ export default defineConfig({
     video: "retain-on-failure",
   },
   webServer: {
-    command: `npm run dev:evaluation -- --hostname 127.0.0.1 --port ${port}`,
+    command: `npm run dev:evaluation -- --host 127.0.0.1 --port ${port} --strictPort`,
     url: `${baseURL}/api/session`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,

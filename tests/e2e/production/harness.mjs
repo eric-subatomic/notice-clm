@@ -172,7 +172,7 @@ function startNoticeServer(port, persistencePath, workspaceId, provider) {
   );
   const child = spawn(
     "npm",
-    ["run", "dev:production-evidence", "--", "--hostname", "127.0.0.1", "--port", String(port)],
+    ["run", "dev:production-evidence", "--", "--host", "127.0.0.1", "--port", String(port), "--strictPort"],
     {
       cwd: projectRoot,
       detached: process.platform !== "win32",

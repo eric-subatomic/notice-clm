@@ -6,6 +6,17 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 
 ## [Unreleased]
 
+### Fixed
+
+- Anchored the synthetic recurring-obligation browser test to its fixture date and disambiguated agent-governance success notices from loading announcements.
+- Updated local validation launchers for Vinext's supported Vite host and strict-port options.
+- Kept CodeQL initialization and analysis on the same pinned release and grouped future Dependabot updates for those actions.
+
+### Changed
+
+- Refreshed compatible dependencies and GitHub Actions while retaining Node 22, TypeScript 6, and ESLint 9 support. Aligned Next and its ESLint configuration, the React runtime packages, and the Cloudflare toolchain.
+- Updated the guarded deployment pins to Wrangler 4.152.0 and Vinext 1.3.1 without relaxing input validation, credential isolation, or exact-version checks.
+
 ## [0.1.0] - 2026-08-21
 
 ### Added
